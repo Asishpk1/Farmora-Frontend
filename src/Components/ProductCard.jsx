@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import SERVER_URL from '../Service/serverUrl'
-import { addWishlistAPI, checkWishlistAPI, removeFromWishlistAPI } from '../Service/allAPI'
+import { addToCartAPI, addWishlistAPI, checkWishlistAPI, removeFromWishlistAPI } from '../Service/allAPI'
 import { toast } from 'react-toastify'
 import { ResponseContext } from '../Context/ContextAPI'
 import { useNavigate } from 'react-router-dom'
@@ -10,7 +10,7 @@ const ProductCard = ({ crop,isWishlist }) => {
   const [isWishlisted, setIsWishlisted] = useState(false);
 
   const {setRemoveWishlistResponse} = useContext(ResponseContext)
-  const {setAddWishlistResponse} = useContext(ResponseContext)
+  const {setAddWishlistResponse,setAddCartResponse} = useContext(ResponseContext)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -129,6 +129,67 @@ const ProductCard = ({ crop,isWishlist }) => {
       navigate(`/productOverview/${crop._id}`)
     }
   }
+
+  const handleCart = async () =>{
+    if(isWishlist){
+      const { productId, name, price, description, quantity, cropImage, farmerId, consumerId } = crop
+
+    if (productId && name && price && description && quantity && cropImage && farmerId){
+      const token = sessionStorage.getItem('token')
+      if (token) {
+        const reqHeader = {
+          "content-type": "application/json",
+          "authorization": `Bearer ${token}`
+        }
+
+        try{
+          const result = await addToCartAPI({_id:productId,name,price,description,quantity,cropImage,farmerId,consumerId},reqHeader)
+          console.log(result);
+          if(result.status == 200){
+            toast.success(result.data.Message)
+            console.log(result.data.Message);
+            setAddCartResponse(result)
+            
+          }
+          
+        }
+        catch(err){
+          console.log(err);
+          
+        }
+      }
+    }
+    }
+    else{
+      const { _id, name, price, description, quantity, cropImage, farmerId } = crop
+
+    if (_id && name && price && description && quantity && cropImage && farmerId){
+      const token = sessionStorage.getItem('token')
+      if (token) {
+        const reqHeader = {
+          "content-type": "application/json",
+          "authorization": `Bearer ${token}`
+        }
+
+        try{
+          const result = await addToCartAPI(crop,reqHeader)
+          console.log(result);
+          if(result.status == 200){
+            toast.success(result.data.Message)
+            console.log(result.data.Message);
+            setAddCartResponse(result)
+            
+          }
+          
+        }
+        catch(err){
+          console.log(err);
+          
+        }
+      }
+    }
+    }
+  }
   return (
     <>
       <div  style={{ width: '200px', height: '280px', backgroundColor: 'white', borderRadius: '40px' }} className='p-2 shadow'>
@@ -144,7 +205,7 @@ const ProductCard = ({ crop,isWishlist }) => {
           <div style={{ height: '48px' }}><span style={{ fontSize: '12px', color: "grey" }}>{crop.description}</span></div>
           <div className='d-flex justify-content-between align-items-center'>
             <span>{crop.price} $</span>
-            <button style={{ backgroundColor: 'rgba(61, 179, 101, 1)', borderBottomRightRadius: '50px', borderTopRightRadius: '12px', borderTopLeftRadius: '18px', borderBottomLeftRadius: '12px', marginRight: '-28px' }} className='p-3 border-0'>
+            <button onClick={handleCart} style={{ backgroundColor: 'rgba(61, 179, 101, 1)', borderBottomRightRadius: '50px', borderTopRightRadius: '12px', borderTopLeftRadius: '18px', borderBottomLeftRadius: '12px', marginRight: '-28px' }} className='p-3 border-0'>
               <i className="fa-solid fa-cart-shopping text-light fa-lg"></i>
             </button>
           </div>

@@ -3,14 +3,14 @@ import Badge from 'react-bootstrap/Badge';
 import { Navbar, Nav, Form, Button, Container } from "react-bootstrap";
 import { useContext, useEffect, useState } from 'react';
 import { ResponseContext } from '../Context/ContextAPI';
-import { userWishlistAPI } from '../Service/allAPI';
+import { userWishlistAPI, viewCartAPI } from '../Service/allAPI';
 
 const HeaderBuyer = ({isadminDash}) => {
 
   const [WishlistCrops,setWishlistCrops] = useState([])
     // console.log(WishlistCrops);
     
-    const {removeWishlistResponse,addWishlistResponse} = useContext (ResponseContext)
+    const {removeWishlistResponse,addWishlistResponse,addCartResponse,deleteCartResponse} = useContext (ResponseContext)
     
   
     useEffect(() => {
@@ -45,6 +45,37 @@ const HeaderBuyer = ({isadminDash}) => {
         }
       }
     }
+
+    const [cartItems,setCartItems] = useState([])
+        // console.log(cartItems);
+      
+        useEffect(() => {
+          viewCart()
+        }, [addCartResponse,deleteCartResponse])
+        
+      
+        const viewCart = async () =>{
+          const token = sessionStorage.getItem('token')
+          
+          if(token){
+            const reqHeader = {
+              "content-type":"application/json",
+              "authorization": `Bearer ${token}`
+            }
+      
+            try{
+              const result = await viewCartAPI(reqHeader)
+              // console.log(result);
+              if(result.status == 200){
+                setCartItems(result.data)
+              }
+            }
+            catch(err){
+              console.log(err);
+              
+            }
+          }
+        }
     return (
         <>
             <Navbar
@@ -114,7 +145,7 @@ const HeaderBuyer = ({isadminDash}) => {
             <Link to={'/cart'}><button className="border-0 bg-transparent">
               <i className="fa-solid fa-cart-shopping fa-lg text-success"></i>
               <Badge pill className="px-1 py-0 fs-6 bg-transparent" style={{ color: "black", fontWeight: "500" }}>
-                0
+                {cartItems.length}
               </Badge>
             </button>
             </Link>

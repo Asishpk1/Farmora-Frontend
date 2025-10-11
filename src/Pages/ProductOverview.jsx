@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import HeaderBuyer from '../Components/HeaderBuyer'
 import Footer from '../Components/Footer'
-import { addWishlistAPI, addWishlistFromViewAPI, checkWishlistAPI, cropOverviewAPI, removeFromWishlistAPI } from '../Service/allAPI'
+import { addToCartAPI, addWishlistAPI, checkWishlistAPI, cropOverviewAPI, removeFromWishlistAPI } from '../Service/allAPI'
 import { useNavigate, useParams } from 'react-router-dom'
 import SERVER_URL from '../Service/serverUrl'
 import { toast } from 'react-toastify'
@@ -51,12 +51,14 @@ const ProductOverview = () => {
     const [isWishlisted, setIsWishlisted] = useState(false);
 
     const { setRemoveWishlistResponse } = useContext(ResponseContext)
-    const { setAddWishlistResponse } = useContext(ResponseContext)
+    const { setAddWishlistResponse,setAddCartResponse } = useContext(ResponseContext)
     const navigate = useNavigate()
 
     useEffect(() => {
-        checkWishlist()
-    }, [])
+        if(viewCrop[0]?._id){
+            checkWishlist()
+        }
+    }, [viewCrop])
 
 
     const checkWishlist = async () => {
@@ -162,6 +164,38 @@ const ProductOverview = () => {
         }
     }
 
+    const handleCart = async () =>{
+          const { name, price, description, quantity, cropImage, farmerId, consumerId } = viewCrop[0]
+    
+        if  (name && price && description && quantity && cropImage && farmerId){
+          const token = sessionStorage.getItem('token')
+          if (token) {
+            const reqHeader = {
+              "content-type": "application/json",
+              "authorization": `Bearer ${token}`
+            }
+    
+            try{
+              const result = await addToCartAPI({_id:id,name,price,description,quantity,cropImage,farmerId,consumerId},reqHeader)
+              console.log(result);
+              if(result.status == 200){
+                toast.success(result.data.Message)
+                console.log(result.data.Message);
+                setAddCartResponse(result)
+                
+              }
+              
+            }
+            catch(err){
+              console.log(err);
+              
+            }
+          }
+        }
+
+       
+      }
+
     return (
         <>
             <div>
@@ -188,7 +222,7 @@ const ProductOverview = () => {
                                         Wishlist <i className="fa-regular fa-heart"></i>
                                     </>
                                 )}</button>
-                                <button className='btn text-light px-5' style={{ backgroundColor: 'rgba(61, 179, 101, 1)', borderRadius: '30px', fontWeight: '500' }}>Add to cart <i class="fa-solid fa-cart-plus"></i></button>
+                                <button onClick={handleCart} className='btn text-light px-5' style={{ backgroundColor: 'rgba(61, 179, 101, 1)', borderRadius: '30px', fontWeight: '500' }}>Add to cart <i class="fa-solid fa-cart-plus"></i></button>
                             </div>
                         </div>
                     </div>

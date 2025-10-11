@@ -71,7 +71,32 @@ export const cropOverviewAPI = async (id,reqHeader) =>{
     return await commonAPI("GET",`${SERVER_URL}/productView/${id}`,{},reqHeader)
 }
 
-//API Call for adding to Wishlist from Crop View
-export const addWishlistFromViewAPI = async (reqBody,reqHeader) =>{
-    return await commonAPI("POST",`${SERVER_URL}/addWishlistFromView`,reqBody,reqHeader)
+//API Call for Adding Crop to Cart
+export const addToCartAPI = async (reqBody,reqHeader)=>{
+    return await commonAPI("POST",`${SERVER_URL}/addCart`,reqBody,reqHeader)
+}
+
+//API Call for Getting User Cart Items
+export const viewCartAPI = async (reqHeader) =>{
+    return await commonAPI("GET",`${SERVER_URL}/userCart`,{},reqHeader)
+}
+
+//API Call for reducing Cart quantity
+export const reduceCartQuantity = async (reqBody,reqHeader)=>{
+    return await commonAPI("POST",`${SERVER_URL}/cart/reduce/quantity`,reqBody,reqHeader)
+}
+
+//API Call for increasing Cart quantity
+export const increaseCartQuantityAPI = async (reqBody,reqHeader)=>{
+    return await commonAPI("POST",`${SERVER_URL}/cart/increase/quantity`,reqBody,reqHeader)
+}
+
+//API Call for Deleting Cart Item
+export const deleteCartItemAPI = async (id,reqHeader)=>{
+    return await commonAPI("DELETE",`${SERVER_URL}/cart/delete/${id}`,{},reqHeader)
+}
+
+//API Call for Clearing Cart
+export const clearCartAPI = async (reqHeader)=>{
+    return await commonAPI("DELETE",`${SERVER_URL}/clearCart`,{},reqHeader)
 }
