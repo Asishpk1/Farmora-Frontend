@@ -22,8 +22,8 @@ export const homeCropsAPI = async () =>{
 }
 
 //API Call for Getting All Crops
-export const allCropsAPI = async (reqHeader)=>{
-    return await commonAPI('GET',`${SERVER_URL}/getAllCrops`,{},reqHeader)
+export const allCropsAPI = async (searchKey,reqHeader)=>{
+    return await commonAPI('GET',`${SERVER_URL}/getAllCrops?search=${searchKey}`,{},reqHeader)
 }
 
 //API Call for Getting User Crops
@@ -99,4 +99,9 @@ export const deleteCartItemAPI = async (id,reqHeader)=>{
 //API Call for Clearing Cart
 export const clearCartAPI = async (reqHeader)=>{
     return await commonAPI("DELETE",`${SERVER_URL}/clearCart`,{},reqHeader)
+}
+
+//API Call for Clearing Cart
+export const deleteCropAPI = async (id,reqHeader)=>{
+    return await commonAPI("DELETE",`${SERVER_URL}/deleteCrop/${id}`,{},reqHeader)
 }

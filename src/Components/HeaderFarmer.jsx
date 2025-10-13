@@ -1,16 +1,25 @@
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const HeaderFarmer = () => {
 
     const [show, setShow] = useState(false);
+    const navigate = useNavigate()
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    
+    const user = JSON.parse(sessionStorage.getItem('user'))
+    const handleLogout = async () => {
+        sessionStorage.clear()
+        toast.info(`Logged out successfully. See you soon, ${user.username} !`)
+        setTimeout(() => {
+            navigate('/')
+        }, 1000);
+    }
 
     return (
         <>
@@ -38,13 +47,13 @@ const HeaderFarmer = () => {
                             <div>
                                 <Link to={'/weather'} className='text-decoration-none text-dark'><span> <i class="fa-solid fa-temperature-three-quarters"></i> Weather</span></Link>
                             </div>
-                            
+
                             <div>
                                 <Link to={'/'} className='text-decoration-none text-dark'><span> <i class="fa-solid fa-house"></i> Home</span></Link>
                             </div>
                         </div>
                         <div>
-                            <Link to={'/farmer-login'} className='text-decoration-none text-dark'><span> <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</span></Link>
+                            <button onClick={handleLogout} className='btn'><i className="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
                         </div>
                     </Offcanvas.Body>
                 </Offcanvas>

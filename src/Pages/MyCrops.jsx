@@ -25,7 +25,7 @@ const MyCrops = () => {
 
     const [Preview,setPreview] = useState(AddCrop)
 
-    const {setAddCropResponse} = useContext(ResponseContext)
+    const {setAddCropResponse,deleteCropResponse} = useContext(ResponseContext)
 
     const handleClose = () =>{
     setShow(false);
@@ -97,7 +97,7 @@ const MyCrops = () => {
 
     useEffect(() => {
       getUserCrops()
-    }, [])
+    }, [deleteCropResponse])
     
 
     const getUserCrops = async () =>{
@@ -123,6 +123,8 @@ const MyCrops = () => {
             }
         }
     }
+
+    
     
     
     return (
@@ -196,7 +198,7 @@ const MyCrops = () => {
                         <div className="d-flex justify-content-center gap-5 flex-wrap mt-5 pb-5">
                             {userCrops.length>0?
                             [...userCrops].reverse().map((crop,index)=>(
-                                <ProductCard key={index} crop={crop}/>
+                                <ProductCard key={index} crop={crop} isMyCrops={true} />
                             ))
                         : <h1>No Crops Found</h1> }
                         </div>

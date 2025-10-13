@@ -12,9 +12,11 @@ const ContextAPI = ({children}) => {
     const [removeWishlistResponse,setRemoveWishlistResponse] = useState({})
     const [addCartResponse,setAddCartResponse] = useState({})
     const [deleteCartResponse,setDeleteCartResponse] = useState({})
+    const [deleteCropResponse,setDeleteCropResponse] = useState({})
+    const [searchKey,setSearchKey] = useState([])
   return (
     <>
-    <ResponseContext.Provider value={{addcropResponse,setAddCropResponse,removeWishlistResponse,setRemoveWishlistResponse,addWishlistResponse,setAddWishlistResponse,addCartResponse,setAddCartResponse,deleteCartResponse,setDeleteCartResponse}}>
+    <ResponseContext.Provider value={{addcropResponse,setAddCropResponse,removeWishlistResponse,setRemoveWishlistResponse,addWishlistResponse,setAddWishlistResponse,addCartResponse,setAddCartResponse,deleteCartResponse,setDeleteCartResponse,deleteCropResponse,setDeleteCropResponse,searchKey,setSearchKey}}>
         {children}
     </ResponseContext.Provider>
     </>

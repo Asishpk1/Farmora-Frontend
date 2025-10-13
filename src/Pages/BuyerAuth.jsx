@@ -106,8 +106,8 @@ const BuyerAuth = ({isRegister}) => {
                                     Login {loginSpinner && <Spinner animation="border" variant="success" size="sm" />}
                                 </button>}
                             {isRegister ?
-                                <p className="mt-2" style={{ fontSize: '10px', textAlign: 'center', color: 'gray' }}>Already have an account ? <Link className="text-decoration-none text-dark" style={{ fontWeight: '600' }}>Sign In</Link> </p>
-                                : <p className="mt-2" style={{ fontSize: '10px', textAlign: 'center', color: 'gray' }}>Don't have an account ? <Link className="text-decoration-none text-dark" style={{ fontWeight: '600' }}>Sign Up</Link> </p>}
+                                <p className="mt-2" style={{ fontSize: '10px', textAlign: 'center', color: 'gray' }}>Already have an account ? <Link to={'/consumer-login'} className="text-decoration-none text-dark" style={{ fontWeight: '600' }}>Sign In</Link> </p>
+                                : <p className="mt-2" style={{ fontSize: '10px', textAlign: 'center', color: 'gray' }}>Don't have an account ? <Link to={'/consumer-register'} className="text-decoration-none text-dark" style={{ fontWeight: '600' }}>Sign Up</Link> </p>}
                         </div>
                     </div>
                 </div>

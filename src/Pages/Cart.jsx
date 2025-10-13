@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import HeaderBuyer from '../Components/HeaderBuyer'
 import Footer from '../Components/Footer'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -10,11 +10,15 @@ import SERVER_URL from '../Service/serverUrl';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { ResponseContext } from '../Context/ContextAPI';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
 const Cart = () => {
 
   const [cartItems, setCartItems] = useState([])
   console.log(cartItems);
+  const [address, setAddress] = useState("")
+  console.log(address);
+  const navigate = useNavigate()
 
   const { setDeleteCartResponse } = useContext(ResponseContext)
 
@@ -119,7 +123,7 @@ const Cart = () => {
     }
   }
 
-  const clearCart = async () => {
+  const clearCart = async (showToast = true) => {
     const token = sessionStorage.getItem('token')
 
     if (token) {
@@ -133,7 +137,9 @@ const Cart = () => {
         console.log(result);
         if (result.status == 200) {
           setDeleteCartResponse(result)
-          toast.info("Whoosh! Your cart has been swept clean")
+          if(showToast){
+            toast.info("Whoosh! Your cart has been swept clean")
+          }
           viewCart()
         }
       }
@@ -142,6 +148,98 @@ const Cart = () => {
 
       }
     }
+  }
+
+  const totalPrice = cartItems.reduce((total, item) => { return total + item.price * item.cartQuantity; }, 0)
+  const orderRequiredItems = cartItems.map(item => ({
+    crops: item.name,
+    farmerId: item.farmerId,
+    orderStatus: "Pending"
+  }))
+  console.log(orderRequiredItems);
+  const consumerName = JSON.parse(sessionStorage.getItem('user')).username
+  const consumerEmail = JSON.parse(sessionStorage.getItem('user')).email
+  console.log(consumerName);
+  const token = sessionStorage.getItem('token')
+
+  const paymentHandler = async (e) => {
+    if(address){
+      const response = await fetch(`${SERVER_URL}/order`, {
+      method: "POST",
+      body: JSON.stringify({ totalPrice }),
+      headers: {
+        "content-type": "application/json",
+        "authorization": `Bearer ${token}`
+      }
+    });
+    const order = await response.json()
+    console.log(order);
+
+    var options = {
+      "key": "rzp_test_RSXbugS3xjkI1C", // Enter the Key ID generated from the Dashboard
+      totalPrice, // Amount is in currency subunits.
+      "currency": "INR",
+      "name": "Farmora", //your business name
+      "description": "Test Transaction",
+      "image": "https://example.com/your_logo",
+      "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      handler: async function (response) {
+        const body = {
+          razorpayPaymentId: response.razorpay_payment_id, razorpayOrderId: response.razorpay_order_id, razorpaySignature: response.razorpay_signature, orderRequiredItems, consumerName, address, totalPrice
+        }
+
+        const orderCreation = await fetch(`${SERVER_URL}/order-creation`, {
+          method: "POST",
+          body: JSON.stringify(body),
+          headers: {
+            "content-type": "application/json",
+            "authorization": `Bearer ${token}`
+          }
+        })
+        
+        console.log(orderCreation);
+        if(orderCreation.status == 200){
+          clearCart(false)
+          setAddress("")
+          toast.success("Order placed! We’re getting it ready for you! 🚚")
+          setTimeout(() => {
+            navigate('/products')
+          }, 2000);
+        }
+        if(orderCreation.status == 401){
+          console.log(orderCreation.response.data);
+          
+        }
+        
+      },
+      "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
+        "name": consumerName, //your customer's name
+        "email": consumerEmail
+      },
+      "notes": {
+        "address": "Razorpay Corporate Office"
+      },
+      "theme": {
+        "color": "#3399cc"
+      }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.on('payment.failed', function (response) {
+      alert(response.error.code);
+      alert(response.error.description);
+      alert(response.error.source);
+      alert(response.error.step);
+      alert(response.error.reason);
+      alert(response.error.metadata.order_id);
+      alert(response.error.metadata.payment_id);
+    });
+    rzp1.open();
+    e.preventDefault();
+    }
+    else{
+      toast.warning("Enter your delivery address to proceed with checkout")
+    }
+
   }
 
 
@@ -201,7 +299,7 @@ const Cart = () => {
                     <Card className='border-0 p-2' style={{ borderRadius: '30px', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)' }}>
                       <Card.Body>
                         <Card.Title style={{ fontWeight: '500' }}>Address</Card.Title>
-                       <textarea className='form-control' rows="3" placeholder="House No, Street, Area, City, Pincode"></textarea>
+                        <textarea value={address} onChange={(e) => { setAddress(e.target.value) }} className='form-control' rows="3" placeholder="House No, Street, Area, City, Pincode"></textarea>
                       </Card.Body>
                     </Card>
                     <Card className='border-0 p-2 mt-5' style={{ borderRadius: '30px', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)' }}>
@@ -210,7 +308,7 @@ const Cart = () => {
                         <Card.Title> Total Amount : <span>&#8377; {cartItems.reduce((total, item) => {
                           return total + item.price * item.cartQuantity;
                         }, 0)} </span></Card.Title>
-                        <Button className='w-100 btn rounded-pill  py-2 px-3 border-0 shadow' style={{ backgroundColor: 'rgba(61, 179, 101, 1)', fontFamily: "Poppins, sans-serif" }}>CHECKOUT</Button>
+                        <Button onClick={paymentHandler} className='w-100 btn rounded-pill  py-2 px-3 border-0 shadow' style={{ backgroundColor: 'rgba(61, 179, 101, 1)', fontFamily: "Poppins, sans-serif" }}>CHECKOUT</Button>
                       </Card.Body>
                     </Card>
                   </div>

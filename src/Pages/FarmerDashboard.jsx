@@ -241,7 +241,7 @@ const FarmerDashboard = () => {
               >
                 {userCrops.length > 0 ?
                   [...userCrops].reverse().slice(0, 3).map((crop, index) => (
-                    <ProductCard key={index} crop={crop} />
+                    <ProductCard key={index} crop={crop} isFarmerDashboard={true} />
                   ))
                   : <h1 style={{ color: 'rgba(61, 179, 101, 1)' }}>No Crops Found</h1>}
               </div>

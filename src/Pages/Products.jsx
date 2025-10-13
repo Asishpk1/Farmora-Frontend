@@ -1,18 +1,23 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import Footer from "../Components/Footer"
 import HeaderBuyer from "../Components/HeaderBuyer"
 import ProductCard from "../Components/ProductCard"
 import { allCropsAPI } from "../Service/allAPI"
+import { ResponseContext } from "../Context/ContextAPI"
 
 
 const Products = () => {
 
   const [allCrops,setAllCrops] = useState([])
-  console.log(allCrops);
+  // console.log(allCrops);
+
+  const {searchKey} = useContext(ResponseContext)
+  // console.log(searchKey);
+  
 
   useEffect(() => {
     getAllCrops()
-  }, [])
+  }, [searchKey])
   
 
   const getAllCrops = async () =>{
@@ -25,9 +30,8 @@ const Products = () => {
       }
 
       try{
-        const result = await allCropsAPI(reqHeader)
-        console.log(result);
-        console.log("REsult");
+        const result = await allCropsAPI(searchKey,reqHeader)
+        // console.log(result);
         if(result.status == 200){
           setAllCrops(result.data)
         }
@@ -42,7 +46,7 @@ const Products = () => {
   return (
     <>
     <div>
-        <HeaderBuyer/>
+        <HeaderBuyer isProductsPage={true}/>
         <div className="d-flex justify-content-center gap-5 flex-wrap mt-5 pb-5 p-5">
             {allCrops.length>0?
             allCrops.map((crop,index)=>(
