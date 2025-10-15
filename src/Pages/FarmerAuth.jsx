@@ -1,8 +1,9 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { loginAPI, registerAPI } from "../Service/allAPI";
 import { toast } from "react-toastify";
 import Spinner from 'react-bootstrap/Spinner'; 
+import { ResponseContext } from "../Context/ContextAPI";
 
 
 const FarmerAuth = ({isRegister}) => {
@@ -10,6 +11,7 @@ const FarmerAuth = ({isRegister}) => {
     const [userDetails,setUserDetails] = useState({username:"",email:"",password:"",role:"Farmer",place:""})
     console.log(userDetails);
     const [loginSpinner,setloginSpinner] = useState(false)
+    const {setIsAuthorized,setIsRole} = useContext(ResponseContext)
 
     const navigate = useNavigate()
 
@@ -50,6 +52,8 @@ const FarmerAuth = ({isRegister}) => {
                     setloginSpinner(true)
                     sessionStorage.setItem("user",JSON.stringify(result.data.user))
                     sessionStorage.setItem("token",result.data.token)
+                    setIsAuthorized(sessionStorage.getItem('token'))
+                    setIsRole(JSON.parse(sessionStorage.getItem('user')))
                     toast.success(`Hello ${result.data.user.username} 👋You’re now logged in as ${result.data.user.role} 🌾`)
                     setTimeout(() => {
                         setUserDetails({username:"",email:"",password:"",role:"Farmer"})
@@ -85,7 +89,8 @@ const FarmerAuth = ({isRegister}) => {
                             <img src="https://i.pinimg.com/1200x/50/b5/e6/50b5e6ca09a86509d0e52f53bd1fd493.jpg" alt="" className="w-100 shadow" />
                         </div>
                         <div className="col-6 p-5">
-                            <h6 className="mb-3" style={{fontSize:'14px', fontWeight:'600'}} ><i className="fa-solid fa-seedling" style={{color:'rgba(61, 179, 101, 1)'}}></i> Farmora</h6>
+                            <Link to={'/'} className='text-decoration-none text-success'><h6 className="" style={{ fontSize: '14px', fontWeight: '600' }} ><i className="fa-solid fa-seedling" style={{ color: 'rgba(61, 179, 101, 1)' }}></i> Farmora</h6></Link>
+                            <h6 className='text-secondary opacity-50 mb-4'>Farmer Gateway</h6>
                             {isRegister?
                             <h4 style={{ fontWeight: "600" }}>Create Account</h4>
                         :<h4 style={{ fontWeight: "700" }}>Hello, <br /> Welcome Back</h4>}

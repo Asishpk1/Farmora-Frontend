@@ -105,3 +105,58 @@ export const clearCartAPI = async (reqHeader)=>{
 export const deleteCropAPI = async (id,reqHeader)=>{
     return await commonAPI("DELETE",`${SERVER_URL}/deleteCrop/${id}`,{},reqHeader)
 }
+
+// API Call for Getting Consumer Orders
+export const consumerOrdersAPI = async (reqHeader)=>{
+    return await commonAPI("GET",`${SERVER_URL}/userOrders`,{},reqHeader)
+}
+
+// API Call for Getting Farmer Orders
+export const farmerOrdersAPI = async (reqHeader)=>{
+    return await commonAPI("GET",`${SERVER_URL}/farmerOrders`,{},reqHeader)
+}
+
+// API Call for Updating Order status
+export const updateOrderStatusAPI = async (id,reqBody,reqHeader)=>{
+    return await commonAPI("PUT",`${SERVER_URL}/order/update-status/${id}`,reqBody,reqHeader)
+}
+
+//API Call for getting Top sold crops
+export const topSoldCropsAPI = async (reqHeader)=>{
+    return await commonAPI("GET",`${SERVER_URL}/top-crops`,{},reqHeader)
+}
+
+// API Call for Getting All Orders
+export const allOrdersAPI = async (reqHeader)=>{
+    return await commonAPI("GET",`${SERVER_URL}/allOrders`,{},reqHeader)
+
+}
+// API Call for Getting All Consumers
+export const allConsumersAPI = async (reqHeader)=>{
+    return await commonAPI("GET",`${SERVER_URL}/allConsumers`,{},reqHeader)
+}
+
+// API Call for Getting All Farmers
+export const allFarmersAPI = async (reqHeader)=>{
+    return await commonAPI("GET",`${SERVER_URL}/allFarmers`,{},reqHeader)
+}
+
+//API Call for getting Top Farmers
+export const topFarmersAPI = async (reqHeader)=>{
+    return await commonAPI("GET",`${SERVER_URL}/top-farmers`,{},reqHeader)
+}
+
+//API Call for Registering a Complaint
+export const RegisterComplaintAPI = async (reqBody,reqHeader) =>{
+    return await commonAPI("POST",`${SERVER_URL}/register/complaint`,reqBody,reqHeader)
+}
+
+//API Call for Getting User complaints
+export const getComplaintsAPI = async (reqHeader) =>{
+    return await commonAPI("GET",`${SERVER_URL}/complaints`,{},reqHeader)
+}
+
+//API Call for Deleting User Complaints
+export const deleteComplaintAPI = async (id,reqHeader)=>{
+    return await commonAPI("DELETE",`${SERVER_URL}/complaint/delete/${id}`,{},reqHeader)
+}

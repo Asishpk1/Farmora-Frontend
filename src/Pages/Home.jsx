@@ -4,55 +4,92 @@ import farm from '../assets/farm.jpg'
 import ProductCard from '../Components/ProductCard'
 import Footer from '../Components/Footer'
 import { useEffect, useState } from 'react'
-import { homeCropsAPI } from '../Service/allAPI'
+import { homeCropsAPI, RegisterComplaintAPI } from '../Service/allAPI'
 import { toast } from 'react-toastify'
 
 const Home = () => {
 
     const navigate = useNavigate()
 
-    const [crops,setCrops] = useState([])
+    const [crops, setCrops] = useState([])
     console.log(crops);
-    
+
 
     useEffect(() => {
-      getHomeCrops()
+        getHomeCrops()
     }, [])
-    
 
-    const getHomeCrops = async () =>{
-        try{
+
+    const getHomeCrops = async () => {
+        try {
             const result = await homeCropsAPI()
             console.log(result);
-            if(result.status == 200){
+            if (result.status == 200) {
                 setCrops(result.data)
             }
-            if(result.status==401){
+            if (result.status == 401) {
                 console.log(result.response.data);
-                
+
             }
-            
+
         }
-        catch(err){
+        catch (err) {
             console.log(err);
-            
+
         }
     }
 
     const user = JSON.parse(sessionStorage.getItem('user'))
     console.log(user);
-    
-    const handleAllCrops = async () =>{
-        if(sessionStorage.getItem('token') && user.role == "Consumer" ){
+
+    const handleAllCrops = async () => {
+        if (sessionStorage.getItem('token') && user.role == "Consumer") {
             navigate('/products')
         }
-        else{
+        else {
             toast.warning("Please login as Consumer to see all our Crops")
             setTimeout(() => {
                 navigate('/consumer-login')
             }, 2000);
         }
     }
+
+    const [issueInput, setIssueInput] = useState("")
+    console.log(issueInput);
+
+    const handleComplaint = async () => {
+        const token = sessionStorage.getItem('token')
+        const user = JSON.parse(sessionStorage.getItem('user'))
+
+        if (token) {
+            const reqHeader = {
+                "content-type": "application/json",
+                "authorization": `Bearer ${token}`
+            }
+
+            try {
+                const result = await RegisterComplaintAPI({ user, issueInput }, reqHeader)
+                console.log(result);
+                if (result.status == 200) {
+                    setIssueInput("")
+                    toast.success("Your issue has been recorded successfully")
+                }
+                if (result.status == 401) {
+                    console.log(result.response.data);
+
+                }
+
+            }
+            catch (err) {
+                console.log(err);
+
+            }
+        }
+        else {
+            toast.warning("Sign in to register a complaint")
+        }
+    }
+
     return (
         <>
             <div>
@@ -70,7 +107,6 @@ const Home = () => {
                                         <span className="fs-4" style={{ color: 'rgba(61, 179, 101, 1)', fontWeight: '500' }}><i class="fa-solid fa-seedling"></i> Farmora </span>
                                     </div>
                                     <div className="gap-4 d-flex">
-                                        <Link to={'/'} className='text-decoration-none text-dark'><span>Home</span></Link>
                                         <Link to={'/farmer-login'} className='text-decoration-none text-dark'><span>Farmer</span></Link>
                                         <Link to={'/consumer-login'} className='text-decoration-none text-dark'><span>Consumer</span></Link>
                                         <Link to={'/admin-login'} className='text-decoration-none text-dark'><span>Admin</span></Link>
@@ -115,13 +151,14 @@ const Home = () => {
                 </div>
 
                 <div className='container-fluid'>
-                    <div className='row d-flex justify-content-center gap-4 p-5' style={{ marginTop: '100px', backgroundColor: 'white', height: '380px' }}>
+                    <div className='row d-flex justify-content-center gap-4 p-5' style={{ marginTop: '100px', backgroundColor: 'white', height: '400px' }}>
                         <div className='col-3'>
-                            <img src={farm} alt="" className='shadow' style={{ width: '90%', borderTopLeftRadius: '150px', borderBottomLeftRadius: '150px', borderBottomRightRadius: '150px', borderTopRightRadius: '15px' }} />
+                            <img src={farm} alt="" className='shadow' style={{ width: '95%', borderTopLeftRadius: '150px', borderBottomLeftRadius: '150px', borderBottomRightRadius: '150px', borderTopRightRadius: '15px' }} />
                         </div>
                         <div className='col-3'>
                             <h2>Our Story</h2>
-                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odit facere, ullam commodi eligendi voluptatem tempora maiores magnam eos error animi labore molestias ratione beatae non, dolorum officia debitis blanditiis. Ex.</p>
+                            <p className='text-secondary'>Farmora began with a simple realization, while markets were getting smarter, farmers were still left disconnected. They cultivated with dedication but faced unfair prices and no digital presence.
+                                To change this, Farmora was created as a smart bridge, bringing farmers and buyers together in a transparent, fair, and tech-driven marketplace.</p>
                             <Link to={'/'}><button className='btn' style={{ backgroundColor: "rgba(61, 179, 101, 1)", borderRadius: '20px', color: 'white' }}>Learn more</button></Link>
                         </div>
                     </div>
@@ -135,12 +172,12 @@ const Home = () => {
                         </div>
                     </div> <br />
                     <div className='d-flex justify-content-around align-items-center'>
-                        {crops.length>0 ?
-                        crops.map((crop,index)=>(
-                            <ProductCard key={index} crop={crop} />
-                        ))
-                    :<div>No Crops Found</div>
-                    }
+                        {crops.length > 0 ?
+                            crops.map((crop, index) => (
+                                <ProductCard key={index} crop={crop} />
+                            ))
+                            : <div>No Crops Found</div>
+                        }
                     </div>
                     <div className='text-center mt-5'>
                         <button onClick={handleAllCrops} className='border-0 bg-transparent' style={{ color: 'rgba(61, 179, 101, 1)' }}>See all products</button>
@@ -153,7 +190,7 @@ const Home = () => {
                             <h2 style={{ fontWeight: '600' }}>A Community of Farmers</h2>
                             <span style={{ color: 'grey' }}>Join thousands of farmers who already trust us.</span> <br /> <br />
                             <Link to={'/farmer-login'}>
-                            <button className='btn text-light py-1 px-4 shadow' style={{ backgroundColor: 'rgba(61, 179, 101, 1)', borderTopLeftRadius: '2px', borderBottomLeftRadius: '25px', borderBottomRightRadius: '20px', borderTopRightRadius: '20px' }}>Login</button>
+                                <button className='btn text-light py-1 px-4 shadow' style={{ backgroundColor: 'rgba(61, 179, 101, 1)', borderTopLeftRadius: '2px', borderBottomLeftRadius: '25px', borderBottomRightRadius: '20px', borderTopRightRadius: '20px' }}>Login</button>
                             </Link>
                         </div>
                         <div className="col-2 p-0">
@@ -166,7 +203,7 @@ const Home = () => {
                             <h2 style={{ fontWeight: '600' }}>Thousands of people trust our Agricultural products</h2>
                             <span style={{ color: 'grey' }}>Join the amazing Farming that we provide for you and just you</span> <br /> <br />
                             <Link to={'/consumer-login'}>
-                            <button className='btn text-light py-1 px-4 shadow' style={{ backgroundColor: 'rgba(61, 179, 101, 1)', borderTopLeftRadius: '20px', borderBottomLeftRadius: '20px', borderBottomRightRadius: '25px', borderTopRightRadius: '2px' }}>Login</button>
+                                <button className='btn text-light py-1 px-4 shadow' style={{ backgroundColor: 'rgba(61, 179, 101, 1)', borderTopLeftRadius: '20px', borderBottomLeftRadius: '20px', borderBottomRightRadius: '25px', borderTopRightRadius: '2px' }}>Login</button>
                             </Link>
                         </div>
                     </div>
@@ -199,26 +236,26 @@ const Home = () => {
                 </div>
 
                 <div className='d-flex justify-content-center' style={{ marginTop: '120px' }}>
-                    <div style={{ width: '95%', height: '500px', backgroundImage: "url('https://c0.wallpaperflare.com/path/575/928/850/aerial-aerial-shot-aerial-view-bird-s-eye-view-4cdb5d2478a55666448bb90eae22b861.jpg')", backgroundSize: "cover", backgroundPosition: "center", borderRadius: "30px", color: 'white',gap:'300px' }} className='d-flex justify-content-around align-items-center mb-5'>
+                    <div style={{ width: '95%', height: '500px', backgroundImage: "url('https://c0.wallpaperflare.com/path/575/928/850/aerial-aerial-shot-aerial-view-bird-s-eye-view-4cdb5d2478a55666448bb90eae22b861.jpg')", backgroundSize: "cover", backgroundPosition: "center", borderRadius: "30px", color: 'white', gap: '300px' }} className='d-flex justify-content-around align-items-center mb-5'>
                         <div className='mb-5'>
-                            <h2 className='mb-4' style={{fontWeight:'600'}}>Get information about us</h2>
-                            <span>What are you Looking for</span>
+                            <h2 className='mb-4' style={{ fontWeight: '600' }}>Something wrong, Let us know</h2>
+                            <span>Raise a Complaint</span>
                             <div className='position-relative mt-5'>
-                                <input type="text" className="form-control position-absolute" placeholder="Email" id="inputDefault" fdprocessedid="v099u8" style={{ borderRadius: '30px', padding:'10px 20px', fontSize:'13px',height:'46px'  }} />
-                                <button className='btn text-light position-absolute' style={{ backgroundColor: "rgba(61, 179, 101, 1)", right: '0', borderRadius: '30px', padding:'10px 20px', fontSize:'12px',height:'46px' }}>Submit</button>
+                                <input value={issueInput} onChange={(e) => { setIssueInput(e.target.value) }} type="text" className="form-control position-absolute" placeholder="Type your concern here" id="inputDefault" fdprocessedid="v099u8" style={{ borderRadius: '30px', padding: '10px 20px', fontSize: '13px', height: '46px' }} />
+                                <button onClick={handleComplaint} className='btn text-light position-absolute' style={{ backgroundColor: "rgba(61, 179, 101, 1)", right: '0', borderRadius: '30px', padding: '10px 20px', fontSize: '12px', height: '46px' }}>Submit</button>
                             </div>
                         </div>
                         <div className='d-flex justify-content-center align-items-center gap-3'>
-                            <div style={{ backgroundColor: 'white', borderRadius: '50%', color: 'black', padding: '3px 6px' }}><i class="fa-brands fa-facebook-f"></i></div>
-                            <div style={{ backgroundColor: 'white', borderRadius: '50%', color: 'black', padding: '3px 6px' }}><i class="fa-brands fa-instagram"></i></div>
-                            <div style={{ backgroundColor: 'white', borderRadius: '50%', color: 'black', padding: '3px 6px' }}><i class="fa-brands fa-linkedin-in"></i></div>
-                            <div style={{ backgroundColor: 'white', borderRadius: '50%', color: 'black', padding: '3px 6px' }}><i class="fa-brands fa-github"></i></div>
-                            <div style={{ backgroundColor: 'white', borderRadius: '50%', color: 'black', padding: '3px 6px' }}><i class="fa-brands fa-twitter"></i></div>
+                            <Link to={'https://www.instagram.com/asish.p_/'}><div style={{ backgroundColor: 'white', borderRadius: '50%', color: 'black', padding: '3px 6px' }}><i class="fa-brands fa-facebook-f"></i></div></Link>
+                            <Link to={'https://www.instagram.com/asish.p_/'}><div style={{ backgroundColor: 'white', borderRadius: '50%', color: 'black', padding: '3px 6px' }}><i class="fa-brands fa-instagram"></i></div></Link>
+                            <Link to={'https://www.linkedin.com/in/asish-krishna-p/'}><div style={{ backgroundColor: 'white', borderRadius: '50%', color: 'black', padding: '3px 6px' }}><i class="fa-brands fa-linkedin-in"></i></div></Link>
+                            <Link to={'https://github.com/Asishpk1'}><div style={{ backgroundColor: 'white', borderRadius: '50%', color: 'black', padding: '3px 6px' }}><i class="fa-brands fa-github"></i></div></Link>
+                            <Link to={'https://www.instagram.com/asish.p_/'}><div style={{ backgroundColor: 'white', borderRadius: '50%', color: 'black', padding: '3px 6px' }}><i class="fa-brands fa-twitter"></i></div></Link>
                         </div>
 
                     </div>
                 </div>
-            <Footer/>
+                <Footer />
             </div>
         </>
     )

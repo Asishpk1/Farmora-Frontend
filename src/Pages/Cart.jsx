@@ -15,7 +15,7 @@ import axios from 'axios';
 const Cart = () => {
 
   const [cartItems, setCartItems] = useState([])
-  console.log(cartItems);
+  // console.log(cartItems);
   const [address, setAddress] = useState("")
   console.log(address);
   const navigate = useNavigate()
@@ -151,15 +151,9 @@ const Cart = () => {
   }
 
   const totalPrice = cartItems.reduce((total, item) => { return total + item.price * item.cartQuantity; }, 0)
-  const orderRequiredItems = cartItems.map(item => ({
-    crops: item.name,
-    farmerId: item.farmerId,
-    orderStatus: "Pending"
-  }))
-  console.log(orderRequiredItems);
   const consumerName = JSON.parse(sessionStorage.getItem('user')).username
   const consumerEmail = JSON.parse(sessionStorage.getItem('user')).email
-  console.log(consumerName);
+  // console.log(consumerName);
   const token = sessionStorage.getItem('token')
 
   const paymentHandler = async (e) => {
@@ -185,7 +179,7 @@ const Cart = () => {
       "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
       handler: async function (response) {
         const body = {
-          razorpayPaymentId: response.razorpay_payment_id, razorpayOrderId: response.razorpay_order_id, razorpaySignature: response.razorpay_signature, orderRequiredItems, consumerName, address, totalPrice
+          razorpayPaymentId: response.razorpay_payment_id, razorpayOrderId: response.razorpay_order_id, razorpaySignature: response.razorpay_signature, cartItems, consumerName, address, totalPrice
         }
 
         const orderCreation = await fetch(`${SERVER_URL}/order-creation`, {
@@ -204,7 +198,7 @@ const Cart = () => {
           toast.success("Order placed! We’re getting it ready for you! 🚚")
           setTimeout(() => {
             navigate('/products')
-          }, 2000);
+          }, 1000);
         }
         if(orderCreation.status == 401){
           console.log(orderCreation.response.data);
@@ -264,7 +258,7 @@ const Cart = () => {
                           <th>Sl.no</th>
                           <th>Item</th>
                           <th>Preview</th>
-                          <th>Quantity</th>
+                          <th>Quantity <span className='text-secondary opacity-50'>(kg)</span> </th>
                           <th>Price</th>
                           <th></th>
                           <th></th>
@@ -299,7 +293,7 @@ const Cart = () => {
                     <Card className='border-0 p-2' style={{ borderRadius: '30px', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)' }}>
                       <Card.Body>
                         <Card.Title style={{ fontWeight: '500' }}>Address</Card.Title>
-                        <textarea value={address} onChange={(e) => { setAddress(e.target.value) }} className='form-control' rows="3" placeholder="House No, Street, Area, City, Pincode"></textarea>
+                        <textarea value={address} onChange={(e) => { setAddress(e.target.value) }} className='form-control' rows="3" placeholder="House No, Street, Area, City, Pincode, Phone number"></textarea>
                       </Card.Body>
                     </Card>
                     <Card className='border-0 p-2 mt-5' style={{ borderRadius: '30px', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)' }}>

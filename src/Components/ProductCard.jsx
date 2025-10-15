@@ -5,7 +5,8 @@ import { toast } from 'react-toastify'
 import { ResponseContext } from '../Context/ContextAPI'
 import { useNavigate } from 'react-router-dom'
 
-const ProductCard = ({ crop,isWishlist,isFarmerDashboard,isMyCrops }) => {
+const ProductCard = ({ crop,isWishlist,isFarmerDashboard,isMyCrops,isadminDash,isProductsPage }) => {
+  
   
   const [isWishlisted, setIsWishlisted] = useState(false);
 
@@ -123,19 +124,13 @@ const ProductCard = ({ crop,isWishlist,isFarmerDashboard,isMyCrops }) => {
   }
 
   const handleViewProduct = async () =>{
-    if(crop.length>0){
+    if(isProductsPage || isWishlist){
       if(isWishlist){
       navigate(`/productOverview/${crop.productId}`)
     }
     else{
       navigate(`/productOverview/${crop._id}`)
     }
-    }
-    else{
-      toast.info("Log in as consumer to see more about this product")
-        setTimeout(() => {
-          navigate('/consumer-login')
-        }, 2000);
     }
   }
 
@@ -242,7 +237,7 @@ const ProductCard = ({ crop,isWishlist,isFarmerDashboard,isMyCrops }) => {
         <div className='py-2 px-3'>
           <div className='d-flex justify-content-between align-items-center'>
             <span>{crop?.name}</span>
-            {!isFarmerDashboard && !isMyCrops &&
+            {!isFarmerDashboard && !isMyCrops && !isadminDash &&
             (isWishlist?
             <button onClick={removeFromWishlist} className='btn p-0'><i className="fa-solid fa-heart-circle-minus" style={{ color: 'rgba(61, 179, 101, 1)' }}></i></button>
           :
@@ -250,8 +245,9 @@ const ProductCard = ({ crop,isWishlist,isFarmerDashboard,isMyCrops }) => {
           </div>
           <div style={{ height: '48px' }}><span style={{ fontSize: '12px', color: "grey" }}>{crop.description}</span></div>
           <div className='d-flex justify-content-between align-items-center'>
-            <span>{isWishlist? crop?.isAvailable? `${crop.price} $`: <div className='text-danger'>Out of stock</div>:`${crop?.price} $` } </span>
-            {!isFarmerDashboard &&
+            <span>{isWishlist? crop?.isAvailable? `${crop.price}`: <div className='text-danger'>Out of stock</div>:`${crop?.price}`} &#8377; </span>
+            {!isadminDash &&
+            !isFarmerDashboard &&
             (!isMyCrops?
             <button onClick={handleCart} style={{ backgroundColor: 'rgba(61, 179, 101, 1)', borderBottomRightRadius: '50px', borderTopRightRadius: '12px', borderTopLeftRadius: '18px', borderBottomLeftRadius: '12px', marginRight: '-28px' }} className='p-3 border-0'>
               <i className="fa-solid fa-cart-shopping text-light fa-lg"></i>

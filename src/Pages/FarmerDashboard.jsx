@@ -6,7 +6,7 @@ import ProductCard from '../Components/ProductCard'
 import HeaderFarmer from '../Components/HeaderFarmer'
 import { Link } from 'react-router-dom'
 import { useContext, useEffect, useState } from 'react'
-import { addReminderAPI, deleteReminderAPI, getReminderAPI, userCropsAPI } from '../Service/allAPI'
+import { addReminderAPI, deleteReminderAPI, farmerOrdersAPI, getReminderAPI, topSoldCropsAPI, userCropsAPI } from '../Service/allAPI'
 import { ResponseContext } from '../Context/ContextAPI'
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -100,52 +100,52 @@ const FarmerDashboard = () => {
   }
 
   const [show, setShow] = useState(false);
-  const [reminderDetails,setReminderDetails] = useState({note:"",date:""})
+  const [reminderDetails, setReminderDetails] = useState({ note: "", date: "" })
   // console.log(reminderDetails);
 
-  const [userReminders,setUserReminders] = useState([])
-  console.log(userReminders);
-  
+  const [userReminders, setUserReminders] = useState([])
+  // console.log(userReminders);
+
 
   const handleClose = () => {
     setShow(false)
-    setReminderDetails({note:"",date:""})
+    setReminderDetails({ note: "", date: "" })
   }
   const handleShow = () => setShow(true);
 
-  const addReminder = async()=>{
-    const {note,date} = reminderDetails
+  const addReminder = async () => {
+    const { note, date } = reminderDetails
 
-    if(note && date){
+    if (note && date) {
       //reqHeader
       const token = sessionStorage.getItem('token')
-      if(token){
+      if (token) {
         const reqHeader = {
-        "Content-Type":"application/json",
-        "authorization": `Bearer ${token}`
-      }
-      try{
-        const result = await addReminderAPI(reminderDetails,reqHeader)
-        console.log(result);
-        if(result.status==200){
-          toast.success("Reminder added")
-          handleClose()
-          getReminders()
+          "Content-Type": "application/json",
+          "authorization": `Bearer ${token}`
+        }
+        try {
+          const result = await addReminderAPI(reminderDetails, reqHeader)
+          // console.log(result);
+          if (result.status == 200) {
+            toast.success("Reminder added")
+            handleClose()
+            getReminders()
+
+          }
+          if (result.status == 401) {
+            toast.error(result.response.data)
+            handleClose
+          }
 
         }
-        if(result.status ==401){
-          toast.error(result.response.data)
-          handleClose
+        catch (err) {
+          console.log(err);
+
         }
-        
-      }
-      catch(err){
-        console.log(err);
-        
-      }
       }
     }
-    else{
+    else {
       toast.error("Enter all fields")
     }
   }
@@ -153,63 +153,132 @@ const FarmerDashboard = () => {
   useEffect(() => {
     getReminders()
   }, [])
-  
 
-  const getReminders= async ()=>{
+
+  const getReminders = async () => {
     const token = sessionStorage.getItem('token')
 
-    if(token){
+    if (token) {
       //reqHeader
       const reqHeader = {
-        "Content-Type":"application/json",
-        "authorization":`Bearer ${token}`
+        "Content-Type": "application/json",
+        "authorization": `Bearer ${token}`
       }
 
-      try{
+      try {
         const result = await getReminderAPI(reqHeader)
-        console.log(result);
-        if(result.status == 200){
+        // console.log(result);
+        if (result.status == 200) {
           setUserReminders(result.data)
         }
-        
+
       }
-      catch(err){
+      catch (err) {
         console.log(err);
-        
+
       }
     }
   }
 
-  const deleteReminder = async (id)=>{
+  const deleteReminder = async (id) => {
 
     const token = sessionStorage.getItem('token')
 
-    if(token){
+    if (token) {
       //reqHeader
       const reqHeader = {
-        "Content-Type":"application/json",
-        "authorization":`Bearer ${token}`
+        "Content-Type": "application/json",
+        "authorization": `Bearer ${token}`
       }
 
-      try{
-        const result = await deleteReminderAPI(id,reqHeader)
-        console.log(result);
-        if(result.status==200){
+      try {
+        const result = await deleteReminderAPI(id, reqHeader)
+        // console.log(result);
+        if (result.status == 200) {
           toast.success("Reminder marked as Done")
           getReminders()
         }
-        if(result.status == 401){
+        if (result.status == 401) {
           toast.error(result.response.data)
         }
-        
+
+      }
+      catch (err) {
+        console.log(err);
+
+      }
+    }
+
+  }
+
+  const [orders, setOrders] = useState([])
+  useEffect(() => {
+    getFarmerOrders()
+  }, [])
+
+
+  const getFarmerOrders = async () => {
+    const token = sessionStorage.getItem('token')
+    if (token) {
+      const reqHeader = {
+        "content-type": "application/json",
+        "authorization": `Bearer ${token}`
+      }
+      try {
+        const result = await farmerOrdersAPI(reqHeader)
+        // console.log(result);
+        if (result.status == 200) {
+          setOrders(result.data)
+        }
+        if (result.status == 401) {
+          console.log(result.response.data);
+
+        }
+
+      }
+      catch (err) {
+        console.log(err);
+
+      }
+    }
+  }
+
+  const [topCrops,setTopCrops] = useState({})
+  console.log(topCrops);
+  
+
+  useEffect(() => {
+    topSoldCrops()
+  }, [])
+  
+
+  const topSoldCrops = async () =>{
+    const token = sessionStorage.getItem('token')
+
+    if(token){
+      const reqHeader ={
+        "content-type" : "application/json",
+        "authorization" : `Bearer ${token}`
+      }
+
+      try{
+        const result = await topSoldCropsAPI(reqHeader)
+        // console.log(result);
+        if(result.status == 200){
+          setTopCrops(result.data)
+        } 
+        if(result.status == 401){
+          console.log(result.response.data);
+          
+        }       
       }
       catch(err){
         console.log(err);
         
       }
     }
-
   }
+
 
   return (
     <>
@@ -218,18 +287,22 @@ const FarmerDashboard = () => {
           <HeaderFarmer />
           <div className='col-md-7 col-11 pt-4'>
             <h2>Welcome {user?.username.split(" ")[0]} </h2>
-            <div className='p-4 d-flex justify-content-between align-items-center row my-4' style={{ backgroundColor: 'rgba(61, 179, 101, 1)', color: 'white', borderRadius: '50px', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)' }}>
-              <div className='col-10 d-flex justify-content-between align-items-center' >
+            <div className='p-4 d-flex flex-wrap justify-content-between align-items-center row my-4' style={{ backgroundColor: 'rgba(61, 179, 101, 1)', color: 'white', borderRadius: '50px', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)' }}>
+              <div className='col-12 d-flex justify-content-between align-items-center' >
                 <span style={{ fontWeight: '600', fontSize: '23px', letterSpacing: '1px' }}>My Stats</span>
                 <div>
-                  <span>Total Orders : 5</span> <br />
+                  <span>Total Orders : <span>{orders.length}</span> </span> <br />
                   <Link to={'/myOrders'}><button className='bg-transparent border-0 text-start p-0 text-light'>Go to my orders <i class="fa-solid fa-arrow-right-long"></i></button></Link>
                 </div>
-                <span>Crops : Rice,Wheat, Corn</span>
+                <div>
+                  <span>Crops : </span>
+                {userCrops.length>0 &&
+                  userCrops.map((crop,Index)=>(
+                    <span key={Index}>{crop.name}, </span>
+                  ))}
+                </div>
               </div>
-              <div className='col-1'>
-                <img src={pots} alt="" className='w-100' style={{ transform: "scale(2.4)" }} />
-              </div>
+
             </div>
 
             <div className='mb-4'>
@@ -237,7 +310,7 @@ const FarmerDashboard = () => {
                 <span style={{ fontWeight: '600', fontSize: '23px', letterSpacing: '1px' }}>My Listings</span>
                 <Link to={'/mycrops'} className='text-decoration-none'><span className='text-secondary'>View all <i class="fa-solid fa-arrow-right"></i></span></Link>
               </div>
-              <div className='d-flex justify-content-between align-items-center'
+              <div className='d-flex justify-content-around align-items-center'
               >
                 {userCrops.length > 0 ?
                   [...userCrops].reverse().slice(0, 3).map((crop, index) => (
@@ -261,19 +334,20 @@ const FarmerDashboard = () => {
                       <Modal.Title>Add Reminder</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                      <input value={reminderDetails.note} onChange={(e)=>setReminderDetails({...reminderDetails,note:e.target.value})} type="text" className='form-control mb-3' placeholder='Reminder note' />
-                      <input value={reminderDetails.date} onChange={(e)=>setReminderDetails({...reminderDetails,date:e.target.value})} type="date" className='form-control'  />
+                      <input value={reminderDetails.note} onChange={(e) => setReminderDetails({ ...reminderDetails, note: e.target.value })} type="text" className='form-control mb-3' placeholder='Reminder note' />
+                      <input value={reminderDetails.date} onChange={(e) => setReminderDetails({ ...reminderDetails, date: e.target.value })} type="date" className='form-control' />
                     </Modal.Body>
                     <Modal.Footer>
                       <Button className='border-0' variant="secondary" onClick={handleClose}>
                         Close
                       </Button>
-                      <Button onClick={addReminder} className='border-0' style={{backgroundColor:'rgba(61, 179, 101, 1)'}}>Add</Button>
+                      <Button onClick={addReminder} className='border-0' style={{ backgroundColor: 'rgba(61, 179, 101, 1)' }}>Add</Button>
                     </Modal.Footer>
                   </Modal>
                 </div>
               </div>
               <div className='px-4' style={{ backgroundColor: 'white', borderRadius: '30px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)' }}>
+                {userReminders.length > 0 ?
                 <Table responsive="md" className='text-center'>
                   <thead>
                     <tr>
@@ -284,20 +358,21 @@ const FarmerDashboard = () => {
                     </tr>
                   </thead>
                   <tbody>
-                   {userReminders.length>0?
-                   userReminders.map((reminder,index)=>(
-                     <tr key={index}>
-                      <td className=' text-secondary'>{index+1}</td>
-                      <td className=' text-secondary'>{reminder.note}</td>
-                      <td className=' text-secondary'>{reminder.date.split("-").reverse().join("-")}</td>
-                      <td className=' text-secondary'><button onClick={()=>deleteReminder(reminder._id)} className='btn btn-sm text-light' style={{ backgroundColor: 'rgba(61, 179, 101, 1)' }}>Done</button></td>
-                    </tr>
-                   ))
-                  : <h3>No Reminders Found</h3>
-                  }
                     
+                      {userReminders.map((reminder, index) => (
+                        <tr key={index}>
+                          <td className=' text-secondary'>{index + 1}</td>
+                          <td className=' text-secondary'>{reminder.note}</td>
+                          <td className=' text-secondary'>{reminder.date.split("-").reverse().join("-")}</td>
+                          <td className=' text-secondary'><button onClick={() => deleteReminder(reminder._id)} className='btn btn-sm text-light' style={{ backgroundColor: 'rgba(61, 179, 101, 1)' }}>Done</button></td>
+                        </tr>
+                      ))}
+                      
+                    
+
                   </tbody>
                 </Table>
+                : <h3>No Reminders Found</h3>}
               </div>
 
             </div>
@@ -339,37 +414,29 @@ const FarmerDashboard = () => {
                 <span style={{ fontWeight: '600', fontSize: '23px', letterSpacing: '1px' }}>Top Sellers</span>
               </div>
               <div className='px-4 py-2' style={{ borderRadius: '30px', backgroundColor: "white", overflow: 'hidden', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)' }}>
+                {topCrops.length>0?
                 <Table responsive="md" className='align-middle'>
                   <thead>
                     <tr>
                       <th>Sl.no</th>
                       <th>Item</th>
-                      <th>Orders</th>
-                      <th>Price</th>
+                      <th className='text-center'>Orders</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className=' text-secondary'>1</td>
-                      <td className=' text-secondary'>Rice</td>
-                      <td className=' text-secondary'>101</td>
-                      <td className=' text-secondary'>$ 10</td>
+                    {topCrops.slice(0, 3).map((crop,Index)=>(
+                      <tr key={Index}>
+                      <td className=' text-secondary'>{Index+1}</td>
+                      <td className=' text-secondary'>{crop.crop}</td>
+                      <td className=' text-secondary text-center'>{crop.totalOrders}</td>
+
                     </tr>
-                    <tr>
-                      <td className=' text-secondary'>2</td>
-                      <td className=' text-secondary'>Rice</td>
-                      <td className=' text-secondary'>101</td>
-                      <td className=' text-secondary'>$ 10</td>
-                    </tr>
-                    <tr>
-                      <td className=' text-secondary'>3</td>
-                      <td className=' text-secondary'>Rice</td>
-                      <td className=' text-secondary'>101</td>
-                      <td className=' text-secondary'>$ 10</td>
-                    </tr>
+                    ))}
+                    
                   </tbody>
 
                 </Table>
+                : <h6 className='text-secondary'>No records found at the moment !</h6>}
               </div>
 
             </div>

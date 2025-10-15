@@ -17,14 +17,14 @@ const Footer = () => {
                 <div className='d-flex flex-column'>
                     <span style={{color:'rgba(61, 179, 101, 1)',fontWeight:'600', fontSize:'18px'}}>Farmer</span>
                     <Link className='text-decoration-none text-secondary' style={{fontSize:'14px'}} to={'/farmer-login'}>Login</Link>
-                    <Link className='text-decoration-none text-secondary' style={{fontSize:'14px'}} to={'/farmer-register'}>Register</Link>
                     <Link className='text-decoration-none text-secondary' style={{fontSize:'14px'}} to={'/dashboard'}>Dashboard</Link>
+                    <Link className='text-decoration-none text-secondary' style={{fontSize:'14px'}} to={'/myOrders'}>Orders</Link>
                 </div>
                 <div className='d-flex flex-column'>
-                    <span style={{color:'rgba(61, 179, 101, 1)',fontWeight:'600', fontSize:'18px'}}>Buyer</span>
+                    <span style={{color:'rgba(61, 179, 101, 1)',fontWeight:'600', fontSize:'18px'}}>Consumer</span>
                     <Link className='text-decoration-none text-secondary'  style={{fontSize:'14px'}} to={'/consumer-login'}>Login</Link>
-                    <Link className='text-decoration-none text-secondary'  style={{fontSize:'14px'}} to={'/consumer-register'}>Register</Link>
                     <Link className='text-decoration-none text-secondary'  style={{fontSize:'14px'}} to={'/cart'}>Cart</Link>
+                    <Link className='text-decoration-none text-secondary'  style={{fontSize:'14px'}} to={'/consumer-orders'}>Orders</Link>
                 </div>
                 <div className='d-flex flex-column'>
                     <span style={{color:'rgba(61, 179, 101, 1)',fontWeight:'600', fontSize:'18px'}}>Legal</span>

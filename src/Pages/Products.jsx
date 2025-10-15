@@ -50,7 +50,7 @@ const Products = () => {
         <div className="d-flex justify-content-center gap-5 flex-wrap mt-5 pb-5 p-5">
             {allCrops.length>0?
             allCrops.map((crop,index)=>(
-              <ProductCard key={index} crop={crop}/>
+              <ProductCard key={index} crop={crop} isProductsPage={true}/>
             ))
             : <h1>No Crops found</h1>
           }

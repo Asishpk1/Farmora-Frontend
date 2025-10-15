@@ -118,15 +118,16 @@ const HeaderBuyer = ({ isadminDash,isProductsPage }) => {
               <Nav className="align-items-center gap-md-3">
                 <Link to={'/'} className='text-decoration-none text-secondary'>Home</Link>
                 <Link to={'/products'} className='text-decoration-none text-secondary'>Shop</Link>
-                <Link className='text-decoration-none text-secondary'>Orders</Link>
+                <Link to={'/consumer-orders'} className='text-decoration-none text-secondary'>Orders</Link>
               </Nav>}
 
             {/* Search Bar */}
             {isadminDash ?
               <Nav className="align-items-center gap-md-3">
-                <Link className='text-decoration-none text-secondary'>Home</Link>
-                <Link className='text-decoration-none text-secondary'>Products</Link>
-                <Link className='text-decoration-none text-secondary'>Orders</Link>
+                <Link to={'/'} className='text-decoration-none text-secondary'>Home</Link>
+                <Link to={'/adminDashboard'} className='text-decoration-none text-secondary'>Dashboard</Link>
+                <Link to={'/adminProducts'} className='text-decoration-none text-secondary'>Products</Link>
+                <Link to={'/AdminOrders'} className='text-decoration-none text-secondary'>Orders</Link>
               </Nav>
               : isProductsPage && <Form className="d-flex align-items-center justify-content-center my-2 my-md-0 gap-2">
                 <input

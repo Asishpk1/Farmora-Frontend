@@ -1,14 +1,17 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import Spinner from 'react-bootstrap/Spinner';
 import { loginAPI } from '../Service/allAPI';
+import { ResponseContext } from '../Context/ContextAPI';
 
 const AdminAuth = () => {
 
     const [userDetails, setUserDetails] = useState({ email: "", password: "", role: "Admin" })
     console.log(userDetails);
     const [loginSpinner, setloginSpinner] = useState(false)
+
+    const {setIsAuthorized,setIsRole} = useContext(ResponseContext)
 
     const handleLogin = async () => {
         if (userDetails.email && userDetails.password && userDetails.role) {
@@ -19,6 +22,8 @@ const AdminAuth = () => {
                     setloginSpinner(true)
                     sessionStorage.setItem("user", JSON.stringify(result.data.user))
                     sessionStorage.setItem("token", result.data.token)
+                    setIsAuthorized(sessionStorage.getItem('token'))
+                    setIsRole(JSON.parse(sessionStorage.getItem('user')))
                     toast.success(`Welcome, ${result.data.user.username}! Logged in as ${result.data.user.role}`)
                     setTimeout(() => {
                         setUserDetails({ email: "", password: "", role: "Admin" })
@@ -55,7 +60,8 @@ const AdminAuth = () => {
                             <img src="https://i.pinimg.com/1200x/50/b5/e6/50b5e6ca09a86509d0e52f53bd1fd493.jpg" alt="" className="w-100 shadow" />
                         </div>
                         <div className="col-6 p-5">
-                            <h6 className="mb-5" style={{ fontSize: '14px', fontWeight: '600' }} ><i className="fa-solid fa-seedling" style={{ color: 'rgba(61, 179, 101, 1)' }}></i> Farmora</h6>
+                            <Link to={'/'} className='text-decoration-none text-success'><h6 className="" style={{ fontSize: '14px', fontWeight: '600' }} ><i className="fa-solid fa-seedling" style={{ color: 'rgba(61, 179, 101, 1)' }}></i> Farmora</h6></Link>
+                            <h6 className='text-secondary opacity-50 mb-4'>Admin Gateway</h6>
                             <h4 style={{ fontWeight: "700" }}>Hello, <br /> Welcome Back</h4>
 
                             <input value={userDetails.email} onChange={(e)=>setUserDetails({...userDetails,email:e.target.value})} type="email" className="mb-3 w-100" placeholder="Email" style={{ borderRadius: "30px", padding: "10px 20px", fontSize: "13px", border: "1px solid grey", outline: "none" }} />
