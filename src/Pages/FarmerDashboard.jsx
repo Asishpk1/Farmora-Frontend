@@ -1,7 +1,7 @@
 import { Table } from 'react-bootstrap'
 import pots from '../assets/pots.png'
 import cloudy from '../assets/cloudy.png'
-import weatherdemo from '../assets/weather.png'
+import weatherdemo from '../assets/weather1.png'
 import ProductCard from '../Components/ProductCard'
 import HeaderFarmer from '../Components/HeaderFarmer'
 import { Link } from 'react-router-dom'
@@ -286,8 +286,8 @@ const FarmerDashboard = () => {
         <div className='row'>
           <HeaderFarmer />
           <div className='col-md-7 col-11 pt-4'>
-            <h2>Welcome {user?.username.split(" ")[0]} </h2>
-            <div className='p-4 d-flex flex-wrap justify-content-between align-items-center row my-4' style={{ backgroundColor: 'rgba(61, 179, 101, 1)', color: 'white', borderRadius: '50px', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)' }}>
+            <h2 style={{color:'rgba(61, 179, 101, 1)'}}>Welcome {user?.username.split(" ")[0]} </h2>
+            <div className='d-flex flex-wrap justify-content-between align-items-center row my-4' style={{ backgroundColor: 'rgba(61, 179, 101, 1)', color: 'white', borderRadius: '80px', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',padding:'35px 30px'}}>
               <div className='col-12 d-flex justify-content-between align-items-center' >
                 <span style={{ fontWeight: '600', fontSize: '23px', letterSpacing: '1px' }}>My Stats</span>
                 <div>
@@ -323,7 +323,7 @@ const FarmerDashboard = () => {
               <div className='d-flex justify-content-between align-items-center mb-4 pt-4'>
                 <div>
                   <span style={{ fontWeight: '600', fontSize: '23px', letterSpacing: '1px' }}>Reminders</span>
-                  <button onClick={handleShow} className='btn bg-success btn-sm ms-2 '><i className="fa-solid fa-plus text-light"></i></button>
+                  <button onClick={handleShow} className='btn rounded-pill btn-sm ms-2 ' style={{backgroundColor:'rgba(61, 179, 101, 1)'}}><i className="fa-solid fa-plus text-light"></i></button>
                   <Modal
                     show={show}
                     onHide={handleClose}
@@ -346,7 +346,7 @@ const FarmerDashboard = () => {
                   </Modal>
                 </div>
               </div>
-              <div className='px-4' style={{ backgroundColor: 'white', borderRadius: '30px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)' }}>
+              <div className='px-4 py-2' style={{ backgroundColor: 'white', borderRadius: '30px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',border:'4px solid rgba(61, 179, 101, 1)' }}>
                 {userReminders.length > 0 ?
                 <Table responsive="md" className='text-center'>
                   <thead>
@@ -384,12 +384,12 @@ const FarmerDashboard = () => {
               <Link to={'/weather'} className='text-decoration-none'><span className='text-secondary'>Open Weather <i class="fa-solid fa-arrow-right"></i></span></Link>
             </div>
 
-            <div className='row px-4 py-3 mt-1 shadow' style={{ backgroundColor: 'rgba(61, 179, 101, 1)', borderRadius: '70px', color: 'white' }}>
+            <div className='row px-4 py-3 mt-1 shadow' style={{  borderRadius: '70px', color: 'rgba(61, 179, 101, 1)',border:'4px solid rgba(61, 179, 101, 1)',backgroundColor:'rgba(219, 239, 226, 1)' }}>
               <div className='col-9 d-flex gap-3 align-items-center'>
                 <img src={`https://openweathermap.org/img/wn/${weather?.weather[0].icon}@2x.png`} alt="" className='w-25' />
                 <div className='d-flex flex-column justify-content-around align-items-center'>
                   <span>Today</span>
-                  <span className='fs-5'>{weather && `${Math.round(weather.main.temp)}`}&deg;</span>
+                  <span className='fs-4'>{weather && `${Math.round(weather.main.temp)}`}&deg;</span>
                   <span>{weather?.weather[0].main}</span>
                 </div>
               </div>
@@ -400,7 +400,7 @@ const FarmerDashboard = () => {
 
             <div className='mt-4 mb-4 d-flex flex-wrap gap-3 justify-content-between'>
               {dailyForecast.map((day, index) => (
-                <div key={index} className='d-flex flex-column' style={{ backgroundColor: 'white', borderRadius: '40px', padding: '10px 52px', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)' }}>
+                <div key={index} className='d-flex flex-column' style={{ backgroundColor: 'rgba(219, 239, 226, 1)', borderRadius: '40px', padding: '8px 52px', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',border:'4px solid rgba(61, 179, 101, 1)' }}>
                   <span className='text-secondary' style={{ fontSize: '13px' }}>{new Date(day.dt_txt ? day.dt_txt : day.dt * 1000).toLocaleDateString([], { day: 'numeric', month: 'short' })}</span>
                   <span className='fs-3'>{Math.round(day.main.temp)}°C </span>
                   <span className='text-secondary' style={{ fontSize: '13px' }}>{weather?.weather[0].main}</span>
@@ -413,7 +413,7 @@ const FarmerDashboard = () => {
               <div className='d-flex justify-content-between align-items-center mb-3'>
                 <span style={{ fontWeight: '600', fontSize: '23px', letterSpacing: '1px' }}>Top Sellers</span>
               </div>
-              <div className='px-4 py-2' style={{ borderRadius: '30px', backgroundColor: "white", overflow: 'hidden', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)' }}>
+              <div className='px-4 py-2' style={{ borderRadius: '30px', backgroundColor: "white", overflow: 'hidden', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',border:'4px solid rgba(61, 179, 101, 1)' }}>
                 {topCrops.length>0?
                 <Table responsive="md" className='align-middle'>
                   <thead>

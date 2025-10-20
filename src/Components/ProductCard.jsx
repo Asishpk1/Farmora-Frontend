@@ -232,27 +232,27 @@ const ProductCard = ({ crop,isWishlist,isFarmerDashboard,isMyCrops,isadminDash,i
     }
   return (
     <>
-      <div  style={{ width: '200px', height: '280px', backgroundColor: 'white', borderRadius: '40px' }} className='p-2 shadow'>
-        <div onClick={handleViewProduct} style={{ height: '140px', overflow: 'hidden', borderRadius: '30px' }}><img src={`${SERVER_URL}/uploads/${crop.cropImage}`} alt="" className='w-100' style={{ borderRadius: '30px' }} /></div>
+      <div  style={{ width: '200px', height: '280px', backgroundColor: 'white', borderRadius: '40px' }} className='p-2 shadow product-card'>
+        <div onClick={handleViewProduct} className='product-image' style={{ height: '140px', overflow: 'hidden', borderRadius: '30px' }}><img src={`${SERVER_URL}/uploads/${crop.cropImage}`} alt="" className='w-100' style={{ borderRadius: '30px' }} /></div>
         <div className='py-2 px-3'>
           <div className='d-flex justify-content-between align-items-center'>
-            <span>{crop?.name}</span>
+            <span className='product-name'>{crop?.name}</span>
             {!isFarmerDashboard && !isMyCrops && !isadminDash &&
             (isWishlist?
             <button onClick={removeFromWishlist} className='btn p-0'><i className="fa-solid fa-heart-circle-minus" style={{ color: 'rgba(61, 179, 101, 1)' }}></i></button>
           :
           <button onClick={handleWishlist} className='btn p-0'><i className={`${isWishlisted ? 'fa-solid' : 'fa-regular'} fa-heart`} style={{ color: 'rgba(61, 179, 101, 1)' }}></i></button>)}
           </div>
-          <div style={{ height: '48px' }}><span style={{ fontSize: '12px', color: "grey" }}>{crop.description}</span></div>
+          <div className='displayNone' style={{ height: '48px' }}><span style={{ fontSize: '12px', color: "grey" }}>{crop.description}</span></div>
           <div className='d-flex justify-content-between align-items-center'>
-            <span>{isWishlist? crop?.isAvailable? `${crop.price}`: <div className='text-danger'>Out of stock</div>:`${crop?.price}`} &#8377; </span>
+            <span className='product-name'>{isWishlist? crop?.isAvailable? `${crop.price}`: <div className='text-danger'>Out of stock</div>:`${crop?.price}`} &#8377; </span>
             {!isadminDash &&
             !isFarmerDashboard &&
             (!isMyCrops?
-            <button onClick={handleCart} style={{ backgroundColor: 'rgba(61, 179, 101, 1)', borderBottomRightRadius: '50px', borderTopRightRadius: '12px', borderTopLeftRadius: '18px', borderBottomLeftRadius: '12px', marginRight: '-28px' }} className='p-3 border-0'>
+            <button onClick={handleCart} style={{ backgroundColor: 'rgba(61, 179, 101, 1)', borderBottomRightRadius: '50px', borderTopRightRadius: '12px', borderTopLeftRadius: '18px', borderBottomLeftRadius: '12px', marginRight: '-28px' }} className='p-md-3 border-0 cart-button enlarge'>
               <i className="fa-solid fa-cart-shopping text-light fa-lg"></i>
             </button>
-            : <button onClick={()=>{deleteCrop(crop._id)}} style={{ backgroundColor: 'rgba(61, 179, 101, 1)', borderBottomRightRadius: '50px', borderTopRightRadius: '12px', borderTopLeftRadius: '18px', borderBottomLeftRadius: '12px', marginRight: '-28px' }} className='p-3 border-0'><i className='fa-solid fa-trash text-light'></i></button>
+            : <button onClick={()=>{deleteCrop(crop._id)}} style={{ backgroundColor: 'rgba(61, 179, 101, 1)', borderBottomRightRadius: '50px', borderTopRightRadius: '12px', borderTopLeftRadius: '18px', borderBottomLeftRadius: '12px', marginRight: '-28px' }} className='p-3 border-0 enlarge'><i className='fa-solid fa-trash text-light'></i></button>
             )}
           </div>
         </div>

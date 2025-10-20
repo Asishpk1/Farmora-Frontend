@@ -1,0 +1,147 @@
+.enlarge{
+    transition: 0.5s ease-in-out;
+}
+.enlarge:hover{
+    transform: scale(1.1);
+    background-color: green !important;
+}
+
+.brand-enlarge{
+    transition: 0.5s ease-in-out;
+}
+.brand-enlarge:hover{
+    transform: rotate(360deg);
+    background-color: black !important;
+    color: white !important;
+}
+
+/* Responsive Home Section*/
+@media(max-width:576px) {
+    .nav-bar {
+        width: 100% !important;
+    }
+
+    .nav-brand {
+        font-size: 13px !important;
+    }
+
+    .nav-links {
+        font-size: 11px;
+    }
+
+    .displayNone {
+        display: none !important;
+    }
+
+    .home-head {
+        font-size: 20px !important;
+        text-align: center;
+    }
+
+    .home-head2 {
+        font-size: 14px !important;
+        text-align: center;
+    }
+
+    .home-description {
+        font-size: 11px !important;
+        margin-top: -29px !important;
+    }
+
+    .home-description2 {
+        font-size: 10px !important;
+    }
+
+    .home-community {
+        justify-content: center;
+    }
+
+    .orgs {
+        margin-top: 0px !important;
+    }
+
+    .trusted {
+        font-size: 14px !important;
+    }
+
+    .orgs-list {
+        font-size: 8px;
+    }
+
+    .story-description {
+        font-size: 11px !important;
+    }
+
+    .story-section {
+        height: 290px !important;
+        margin-top: 30px !important;
+    }
+
+    .home-products {
+        font-size: 10px !important;
+    }
+
+    .home-products-div {
+        width: 95% !important;
+    }
+
+    .featured {
+        margin-top: 30px !important;
+    }
+
+    .product-card {
+        height: 150px !important;
+        width: 110px !important;
+    }
+
+    .product-image {
+        height: 80px !important;
+    }
+
+    .product-name {
+        font-size: 11px;
+    }
+
+    .wishlist-button {
+        width: 5px !important;
+    }
+
+    .cart-button {
+        padding: 6px !important;
+        transform: scale(0.8);
+        margin-right: -15px
+    }
+    .complaint-input{
+        height: 30px !important;
+        font-size: 10px !important;
+        padding: 8px 20px !important;
+    }
+    .brand-logos{
+        padding: 0px 2px !important;
+    }
+    .complaint-section{
+        height: 225px !important;
+    }
+}
+
+/* Responsive Footer*/
+@media(max-width:576px){
+    .footer-head{
+        font-size: 14px !important;
+    }
+    .footer-section-head{
+        font-size: 12px !important;
+    }
+    .footer-links{
+        font-size: 11px !important;
+    }
+    .footer-center{
+        text-align: center;
+    }
+    .footer-section{
+        height: 280px !important;
+    }
+    .footer-brand{
+        font-size: 92px !important;
+    }
+}
