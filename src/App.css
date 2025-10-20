@@ -90,7 +90,7 @@
     }
 
     .product-card {
-        height: 150px !important;
+        height: 155px !important;
         width: 110px !important;
     }
 
@@ -109,7 +109,7 @@
     .cart-button {
         padding: 6px !important;
         transform: scale(0.8);
-        margin-right: -15px
+        margin-right: -22px !important;
     }
     .complaint-input{
         height: 30px !important;
@@ -121,6 +121,9 @@
     }
     .complaint-section{
         height: 225px !important;
+    }
+    .complaint-div{
+        margin-top: 50px !important;
     }
 }
 

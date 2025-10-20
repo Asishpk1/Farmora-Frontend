@@ -238,7 +238,7 @@ const Home = () => {
                     </div>
                 </div>
 
-                <div className='d-flex flex-wrap justify-content-center featured' style={{ marginTop: '120px' }}>
+                <div className='d-flex flex-wrap justify-content-center complaint-div' style={{ marginTop: '120px' }}>
                     <div style={{ width: '95%', height: '500px', backgroundImage: "url('https://c0.wallpaperflare.com/path/575/928/850/aerial-aerial-shot-aerial-view-bird-s-eye-view-4cdb5d2478a55666448bb90eae22b861.jpg')", backgroundSize: "cover", backgroundPosition: "center", borderRadius: "30px", color: 'white' }} className='d-flex justify-content-around align-items-center mb-5 row complaint-section p-4 p-md-0'>
                         <div className='mb-5 col-md-4'>
                             <h2 className='mb-4 trusted' style={{ fontWeight: '600' }}>Something wrong, Let us know</h2>

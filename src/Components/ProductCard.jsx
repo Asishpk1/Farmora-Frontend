@@ -252,7 +252,7 @@ const ProductCard = ({ crop,isWishlist,isFarmerDashboard,isMyCrops,isadminDash,i
             <button onClick={handleCart} style={{ backgroundColor: 'rgba(61, 179, 101, 1)', borderBottomRightRadius: '50px', borderTopRightRadius: '12px', borderTopLeftRadius: '18px', borderBottomLeftRadius: '12px', marginRight: '-28px' }} className='p-md-3 border-0 cart-button enlarge'>
               <i className="fa-solid fa-cart-shopping text-light fa-lg"></i>
             </button>
-            : <button onClick={()=>{deleteCrop(crop._id)}} style={{ backgroundColor: 'rgba(61, 179, 101, 1)', borderBottomRightRadius: '50px', borderTopRightRadius: '12px', borderTopLeftRadius: '18px', borderBottomLeftRadius: '12px', marginRight: '-28px' }} className='p-3 border-0 enlarge'><i className='fa-solid fa-trash text-light'></i></button>
+            : <button onClick={()=>{deleteCrop(crop._id)}} style={{ backgroundColor: 'rgba(61, 179, 101, 1)', borderBottomRightRadius: '50px', borderTopRightRadius: '12px', borderTopLeftRadius: '18px', borderBottomLeftRadius: '12px', marginRight: '-28px' }} className='p-3 border-0 enlarge cart-button'><i className='fa-solid fa-trash text-light'></i></button>
             )}
           </div>
         </div>
