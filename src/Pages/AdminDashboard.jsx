@@ -1,5 +1,5 @@
 import { Table } from 'react-bootstrap'
-import adminfarm from '../assets/adminfarm.jpg'
+import adminfarm from '../assets/adminbg.jpg'
 import Footer from '../Components/Footer'
 import HeaderBuyer from '../Components/HeaderBuyer'
 import ProductCard from '../Components/ProductCard'
@@ -7,6 +7,7 @@ import { allConsumersAPI, allCropsAPI, allFarmersAPI, allOrdersAPI, deleteCompla
 import { useContext, useEffect, useState } from 'react'
 import { ResponseContext } from '../Context/ContextAPI'
 import { toast } from 'react-toastify'
+import { Link } from 'react-router-dom'
 
 const AdminDashboard = () => {
 
@@ -258,7 +259,7 @@ const AdminDashboard = () => {
       <div>
         <HeaderBuyer isadminDash />
         <div className='px-5 py-3'>
-          <div className='px-5 py-2 d-flex justify-content-around align-items-center' style={{ backgroundImage: `url(${adminfarm})`, borderRadius: '40px' }}>
+          <div className='px-5 py-2 d-flex justify-content-around align-items-center' style={{ backgroundImage: `url(${adminfarm})`, borderRadius: '40px',backgroundSize: "contain" }}>
             <div>
               <h1 className='text-light'>Hello Asish</h1>
             </div>
@@ -274,8 +275,8 @@ const AdminDashboard = () => {
 
         <div className='container-fluid'>
           <div className='row p-5 d-flex justify-content-around align-items-start'>
-            <div className='col-md-3 px-5 py-3 shadow' style={{ backgroundColor: 'white', borderRadius: '40px' }}>
-              <span className='fs-2' style={{ fontWeight: '600' }}>Farmers</span>
+            <div className='col-md-3 px-5 py-3 shadow text-center' style={{ backgroundColor: 'rgba(219, 239, 226, 1)', borderRadius: '40px',border:'solid 4px rgba(61, 179, 101, 1)' }}>
+              <span className='fs-2' style={{ fontWeight: '600',color:'rgba(61, 179, 101, 1)' }}>Farmers</span>
               {allFarmers.length > 0 ?
                 allFarmers.map((farmer, Index) => (
                   <div className='d-flex align-items-center justify-content-start gap-4 mb-2 px-3 py-2' style={{ border: 'solid 1px rgba(61, 179, 101, 1)', borderRadius: '30px' }}>
@@ -290,8 +291,8 @@ const AdminDashboard = () => {
 
             </div>
 
-            <div className='col-md-3 px-5 py-3 shadow text-center' style={{ backgroundColor: 'white', borderRadius: '40px' }}>
-              <span className='fs-2' style={{ fontWeight: '600' }}>Buyers</span>
+            <div className='col-md-3 px-5 py-3 shadow text-center' style={{ backgroundColor: 'rgba(219, 239, 226, 1)', borderRadius: '40px',border:'solid 4px rgba(61, 179, 101, 1)' }}>
+              <span className='fs-2' style={{ fontWeight: '600',color:'rgba(61, 179, 101, 1)'  }}>Buyers</span>
               {allConsumers.length > 0 ?
                 allConsumers.map((consumer, Index) => (
                   <div className='d-flex align-items-center justify-content-start gap-4 mb-2 px-3 py-2' style={{ border: 'solid 1px rgba(61, 179, 101, 1)', borderRadius: '30px' }}>
@@ -309,7 +310,7 @@ const AdminDashboard = () => {
           <div className='p-5'>
             <div className='d-flex justify-content-center align-items-center mb-3'>
               <h1 className='text-center me-3' style={{ fontWeight: '600' }}>Products</h1>
-              <button className='text-secondary bg-transparent border-0'><i class="fa-solid fa-arrow-right"></i></button>
+              <Link to={'/adminProducts'}><button className='text-secondary bg-transparent border-0'><i class="fa-solid fa-arrow-right"></i></button></Link>
             </div>
             <div className='d-flex justify-content-between align-items-center'>
               {allCrops.length > 0 ?

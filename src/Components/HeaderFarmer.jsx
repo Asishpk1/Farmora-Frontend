@@ -29,31 +29,31 @@ const HeaderFarmer = () => {
                     <i className="fa-solid fa-bars fa-xl"></i>
                 </Button>
 
-                <Offcanvas show={show} onHide={handleClose}>
+                <Offcanvas show={show} onHide={handleClose} style={{ width: '290px', borderRadius:'40px' }}>
                     <Offcanvas.Header closeButton>
                         <Offcanvas.Title className='fs-4' style={{ fontWeight: '600', color: 'rgba(61, 179, 101, 1)' }}><i className="fa-solid fa-seedling"></i> Farmora</Offcanvas.Title>
                     </Offcanvas.Header>
                     <Offcanvas.Body className='d-flex flex-column gap-4 justify-content-between py-5 px-4'>
-                        <div className='d-flex flex-column gap-4'>
+                        <div className='d-flex flex-column gap-5 align-items-center'>
                             <div>
-                                <Link to={'/dashboard'} className='text-decoration-none text-dark'><span style={{color:'rgba(61, 179, 101, 1)'}}> <i class="fa-solid fa-gauge"></i> Dashboard</span></Link>
+                                <Link to={'/dashboard'} className='text-decoration-none text-dark px-5 py-1 d-flex justify-content-center farmer-header' style={{border:'solid 2px rgba(61, 179, 101, 1)', borderRadius:'30px',width:'220px',}}><span style={{color:'rgba(61, 179, 101, 1)'}}> <i class="fa-solid fa-gauge"></i> Dashboard</span></Link>
                             </div>
                             <div>
-                                <Link to={'/mycrops'} className='text-decoration-none text-dark'><span style={{color:'rgba(61, 179, 101, 1)'}}> <i class="fa-solid fa-plant-wilt"></i> My Crops</span></Link>
+                                <Link to={'/mycrops'} className='text-decoration-none text-dark px-5 py-1 d-flex justify-content-center farmer-header' style={{border:'solid 2px rgba(61, 179, 101, 1)', borderRadius:'30px',width:'220px'}}><span style={{color:'rgba(61, 179, 101, 1)'}}> <i class="fa-solid fa-plant-wilt"></i> My Crops</span></Link>
                             </div>
                             <div>
-                                <Link to={'/myOrders'} className='text-decoration-none text-dark'><span style={{color:'rgba(61, 179, 101, 1)'}}> <i class="fa-solid fa-truck-fast"></i> My Orders</span></Link>
+                                <Link to={'/myOrders'} className='text-decoration-none text-dark px-5 py-1 d-flex justify-content-center farmer-header' style={{border:'solid 2px rgba(61, 179, 101, 1)', borderRadius:'30px',width:'220px'}}><span style={{color:'rgba(61, 179, 101, 1)'}}> <i class="fa-solid fa-truck-fast"></i> My Orders</span></Link>
                             </div>
                             <div>
-                                <Link to={'/weather'} className='text-decoration-none text-dark'><span style={{color:'rgba(61, 179, 101, 1)'}}> <i class="fa-solid fa-temperature-three-quarters"></i> Weather</span></Link>
+                                <Link to={'/weather'} className='text-decoration-none text-dark px-5 py-1 d-flex justify-content-center farmer-header' style={{border:'solid 2px rgba(61, 179, 101, 1)', borderRadius:'30px',width:'220px'}}><span style={{color:'rgba(61, 179, 101, 1)'}}> <i class="fa-solid fa-temperature-three-quarters"></i> Weather</span></Link>
                             </div>
 
                             <div>
-                                <Link to={'/'} className='text-decoration-none text-dark'><span style={{color:'rgba(61, 179, 101, 1)'}}> <i class="fa-solid fa-house"></i> Home</span></Link>
+                                <Link to={'/'} className='text-decoration-none text-dark px-5 py-1 d-flex justify-content-center farmer-header' style={{border:'solid 2px rgba(61, 179, 101, 1)', borderRadius:'30px',width:'220px'}}><span style={{color:'rgba(61, 179, 101, 1)'}}> <i class="fa-solid fa-house"></i> Home</span></Link>
                             </div>
                         </div>
                         <div>
-                            <button onClick={handleLogout} className='btn' style={{color:'rgba(61, 179, 101, 1)'}}><i className="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
+                            <button onClick={handleLogout} className='btn enlarge' style={{color:'rgba(61, 179, 101, 1)'}}><i className="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
                         </div>
                     </Offcanvas.Body>
                 </Offcanvas>

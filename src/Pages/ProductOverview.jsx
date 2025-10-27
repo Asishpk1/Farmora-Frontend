@@ -208,10 +208,7 @@ const ProductOverview = () => {
                         <div className='d-flex flex-column col-6 p-5' style={{ backgroundColor: 'white', borderRadius: '40px', boxShadow: '0 10px 20px rgba(0, 0, 0, 0.1)' }}>
                             <h2 style={{ color: 'rgba(61, 179, 101, 1)', fontWeight: '600', letterSpacing: '1px' }}>{viewCrop[0]?.name}</h2>
                             <span className='text-secondary mt-2'>{viewCrop[0]?.description}</span>
-                            <div className='d-flex flex-column text-secondary mt-2 mb-2'>
-                                <span className='' style={{ color: 'rgba(61, 179, 101, 1)', fontWeight: '500', fontSize: '18px' }}>Quantity : {viewCrop[0]?.quantity} </span>
-                            </div>
-                            <span className='fs-3' style={{ fontWeight: '600' }}>$ {viewCrop[0]?.price}</span>
+                            <span className='fs-3 mt-3' style={{ fontWeight: '600' }}>$ {viewCrop[0]?.price}</span>
                             <div className='d-flex  gap-2 justify-content-between mt-4'>
                                 <button onClick={handleWishlist} className='btn text-light px-5' style={{ backgroundColor: 'rgba(61, 179, 101, 1)', borderRadius: '30px', fontWeight: '500' }}>{isWishlisted ? (
                                     <>

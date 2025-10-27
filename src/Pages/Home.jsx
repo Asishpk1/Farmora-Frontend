@@ -4,6 +4,7 @@ import farm from '../assets/farm.jpg'
 import farm1 from '../assets/field.jpg'
 import farmers from '../assets/Farmers.jpg'
 import farmProd from '../assets/farmprod.jpg'
+import green from '../assets/green leaves.jpg'
 import ProductCard from '../Components/ProductCard'
 import Footer from '../Components/Footer'
 import { useEffect, useState } from 'react'
@@ -101,7 +102,7 @@ const Home = () => {
 
                     <div className="d-flex justify-content-center">
 
-                        <div className="px-5 gap-5 mt-4 pb-4" style={{ backgroundColor: 'white', width: '97%', borderRadius: '30px' }}>
+                        <div className="px-5 gap-5 mt-md-4 mt-2 pb-4" style={{ backgroundColor: 'white', width: '97%', borderRadius: '30px' }}>
 
                             {/* Navbar */}
                             <div className="d-flex align-items-center justify-content-center w-100">
@@ -136,7 +137,7 @@ const Home = () => {
                                 </div>
                                 <div className="col-md-2 mt-5 displayNone"> <img src={leaf} alt="" className='w-100' /></div>
                                 <div className="col-md-4 mt-5 displayNone">
-                                    <img src="https://wallpapers.com/images/high/greenery-giant-moringa-b8653z9o7wrmyyp2.webp" alt="" className="w-75 shadow" style={{ borderTopRightRadius: '300px', borderTopLeftRadius: '300px', borderBottomLeftRadius: '300px', borderBottomRightRadius: '70px' }} />
+                                    <img src={green} alt="" className="w-75 shadow" style={{ borderTopRightRadius: '300px', borderTopLeftRadius: '300px', borderBottomLeftRadius: '300px', borderBottomRightRadius: '70px' }} />
                                 </div>
                             </div>
                         </div>

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import adminfarm from '../assets/adminfarm.jpg'
+import weatherbg from '../assets/weatherbg.jpg'
 import HeaderFarmer from '../Components/HeaderFarmer'
-import { data } from 'react-router-dom';
+
 
 const Weather = () => {
 
@@ -59,7 +60,7 @@ const Weather = () => {
         <div className='row'>
             <HeaderFarmer/>
             <div className='col-11 ps-0 pe-5 pt-5'>
-                <div className='d-flex justify-content-between align-items-end px-5 pt-5 pb-3' style={{ backgroundImage: `url(${adminfarm})`, borderRadius: '10px'}}>
+                <div className='d-flex justify-content-between align-items-end px-5 pt-5 pb-3' style={{ backgroundImage: `url(${weatherbg})`, borderRadius: '10px',backgroundSize: "contain"}}>
                     <div className='text-light'>
                         <img src={`https://openweathermap.org/img/wn/${weather?.weather[0].icon}@2x.png`} alt="" />
                         <h1 className='m-0' style={{fontSize:'70px'}}> {weather && `${Math.round(weather.main.temp)}`}&deg;</h1>
@@ -72,7 +73,7 @@ const Weather = () => {
                 </div> <br />
                 <div className='row d-flex gap-5 justify-content-between'>
                     <div className='col-3 d-flex flex-column gap-5 '>
-                        <div className=' px-4 py-3 shadow d-flex justify-content-around gap-4' style={{backgroundColor:'white',borderRadius:'20px', border:'solid 1px rgba(61, 179, 101, 1) '}}>
+                        <div className=' px-4 py-3 shadow d-flex justify-content-around gap-4' style={{backgroundColor:'rgba(219, 239, 226, 1)',borderRadius:'90px', border:'solid 4px rgba(61, 179, 101, 1) '}}>
                         <div className='d-flex flex-column align-items-start justify-content-between'>
                             <div className='d-flex align-items-center gap-2' style={{color:"rgba(61, 179, 101, 1)"}}>
                                 <i className="fa-solid fa-droplet fa-2xl"></i>
@@ -107,14 +108,14 @@ const Weather = () => {
                         </div>
                     </div>
 
-                    <div className='d-flex flex-column px-5 py-3 shadow' style={{color:'rgba(61, 179, 101, 1)',backgroundColor:'white',borderRadius:'20px',border:'solid 1px rgba(61, 179, 101, 1)'}}>
+                    <div className='d-flex flex-column px-5 py-3 shadow' style={{color:'rgba(61, 179, 101, 1)',backgroundColor:'rgba(219, 239, 226, 1)',borderRadius:'20px',border:'solid 4px rgba(61, 179, 101, 1)'}}>
                         <span>Weather Alerts</span>
                         <hr />
                         <span>{weather?.weather[0].description} </span>
                     </div>
                     </div>
 
-                    <div className='col-8 d-flex flex-column shadow' style={{backgroundColor:'white',borderRadius:'30px'}}>
+                    <div className='col-8 d-flex flex-column shadow mb-5' style={{backgroundColor:'rgba(219, 239, 226, 1)',borderRadius:'80px',border:'solid 4px rgba(61, 179, 101, 1)'}}>
                         {dailyForecast.map((day, index) => (
               <div
                 key={index}

@@ -47,7 +47,9 @@ const Products = () => {
     <>
     <div>
         <HeaderBuyer isProductsPage={true}/>
-        <div className="d-flex justify-content-center gap-5 flex-wrap mt-5 pb-5 p-5">
+        
+        {/* Products Section */}
+        <div className="d-flex justify-content-center gap-3 gap-md-5 flex-wrap mt-md-5 pt-3 p-md-5">
             {allCrops.length>0?
             allCrops.map((crop,index)=>(
               <ProductCard key={index} crop={crop} isProductsPage={true}/>
@@ -55,6 +57,7 @@ const Products = () => {
             : <h1>No Crops found</h1>
           }
         </div>
+        
         <Footer/>
     </div>
     </>

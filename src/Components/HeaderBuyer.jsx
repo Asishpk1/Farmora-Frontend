@@ -104,7 +104,7 @@ const HeaderBuyer = ({ isadminDash,isProductsPage }) => {
       >
         <Container fluid className="px-4">
           {/* Brand */}
-          <Navbar.Brand className="fs-4" style={{ fontWeight: "500", color: "rgba(61, 179, 101, 1)" }}>
+          <Navbar.Brand className="fs-4 trusted" style={{ fontWeight: "500", color: "rgba(61, 179, 101, 1)" }}>
             <i className="fa-solid fa-seedling"></i> Farmora
           </Navbar.Brand>
 
@@ -116,18 +116,18 @@ const HeaderBuyer = ({ isadminDash,isProductsPage }) => {
             {/* Left Nav Links */}
             {!isadminDash &&
               <Nav className="align-items-center gap-md-3">
-                <Link to={'/'} className='text-decoration-none text-secondary'>Home</Link>
-                <Link to={'/products'} className='text-decoration-none text-secondary'>Shop</Link>
-                <Link to={'/consumer-orders'} className='text-decoration-none text-secondary'>Orders</Link>
+                <Link to={'/'} className='text-decoration-none text-secondary buyerlinks'>Home</Link>
+                <Link to={'/products'} className='text-decoration-none text-secondary buyerlinks'>Shop</Link>
+                <Link to={'/consumer-orders'} className='text-decoration-none text-secondary buyerlinks'>Orders</Link>
               </Nav>}
 
             {/* Search Bar */}
             {isadminDash ?
               <Nav className="align-items-center gap-md-3">
-                <Link to={'/'} className='text-decoration-none text-secondary'>Home</Link>
-                <Link to={'/adminDashboard'} className='text-decoration-none text-secondary'>Dashboard</Link>
-                <Link to={'/adminProducts'} className='text-decoration-none text-secondary'>Products</Link>
-                <Link to={'/AdminOrders'} className='text-decoration-none text-secondary'>Orders</Link>
+                <Link to={'/'} className='text-decoration-none text-secondary buyerlinks'>Home</Link>
+                <Link to={'/adminDashboard'} className='text-decoration-none text-secondary buyerlinks'>Dashboard</Link>
+                <Link to={'/adminProducts'} className='text-decoration-none text-secondary buyerlinks'>Products</Link>
+                <Link to={'/AdminOrders'} className='text-decoration-none text-secondary buyerlinks'>Orders</Link>
               </Nav>
               : isProductsPage && <Form className="d-flex align-items-center justify-content-center my-2 my-md-0 gap-2">
                 <input

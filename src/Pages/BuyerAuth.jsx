@@ -4,6 +4,7 @@ import { loginAPI, registerAPI } from '../Service/allAPI';
 import { toast } from 'react-toastify';
 import Spinner from 'react-bootstrap/Spinner';
 import { ResponseContext } from '../Context/ContextAPI';
+import farmProd from '../assets/farmprods.jpg'
 
 
 const BuyerAuth = ({ isRegister }) => {
@@ -83,31 +84,31 @@ const BuyerAuth = ({ isRegister }) => {
 
                 <div style={{ position: "relative", zIndex: 1 }} className="container-fluid d-flex align-items-center justify-content-center h-100">
                     <div
-                        className="row w-50 d-flex align-items-center overflow-hidden shadow"
-                        style={{ backgroundColor: "white", borderTopRightRadius: "280px", borderBottomLeftRadius: "280px", borderTopLeftRadius: "5px", borderBottomRightRadius: "5px", }}>
-                        <div className="col-6 p-0">
-                            <img src="https://i.pinimg.com/1200x/50/b5/e6/50b5e6ca09a86509d0e52f53bd1fd493.jpg" alt="" className="w-100 shadow" />
+                        className="row d-flex align-items-center overflow-hidden shadow authbox"
+                        style={{ backgroundColor: "white", borderTopRightRadius: "280px", borderBottomLeftRadius: "280px", borderTopLeftRadius: "5px", borderBottomRightRadius: "5px", width:'50%' }}>
+                        <div className="col-md-6 p-0 displayNone">
+                            <img src={farmProd} alt="" className="w-100 shadow" />
                         </div>
-                        <div className="col-6 p-5">
-                            <Link to={'/'} className='text-decoration-none text-success'><h6 className="" style={{ fontSize: '14px', fontWeight: '600' }} ><i className="fa-solid fa-seedling" style={{ color: 'rgba(61, 179, 101, 1)' }}></i> Farmora</h6></Link>
-                            <h6 className='text-secondary opacity-50 mb-4'>Consumer Gateway</h6>
+                        <div className="col-md-6 p-5">
+                            <Link to={'/'} className='text-decoration-none text-success '><h6 className="authbrand" style={{ fontSize: '14px', fontWeight: '600' }} ><i className="fa-solid fa-seedling" style={{ color: 'rgba(61, 179, 101, 1)' }}></i> Farmora</h6></Link>
+                            <h6 className='text-secondary opacity-50 mb-md-4 mb-3 trusted'>Consumer Gateway</h6>
                             {isRegister ?
-                                <h4 style={{ fontWeight: "600" }}>Create Account</h4>
-                                : <h4 style={{ fontWeight: "700" }}>Hello, <br /> Welcome Back</h4>}
+                                <h4 className='authhead' style={{ fontWeight: "600" }}>Create Account</h4>
+                                : <h4 className='authhead' style={{ fontWeight: "700" }}>Hello, <br /> Welcome Back</h4>}
                             {isRegister &&
-                                <input value={userDetails.username} onChange={(e) => setUserDetails({ ...userDetails, username: e.target.value })} type="text" className="mb-3 w-100" placeholder="Username" style={{ borderRadius: "30px", padding: "10px 20px", fontSize: "13px", border: "1px solid grey", outline: "none" }} />}
-                            <input value={userDetails.email} onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })} type="email" className="mb-3 w-100" placeholder="Email" style={{ borderRadius: "30px", padding: "10px 20px", fontSize: "13px", border: "1px solid grey", outline: "none" }} />
-                            <input value={userDetails.password} onChange={(e) => setUserDetails({ ...userDetails, password: e.target.value })} type="password" className="mb-3 w-100" placeholder="Password" style={{ borderRadius: "30px", padding: "10px 20px", fontSize: "13px", border: "1px solid grey", outline: "none" }} />
+                                <input value={userDetails.username} onChange={(e) => setUserDetails({ ...userDetails, username: e.target.value })} type="text" className="mb-md-3 mb-2 w-100 authinput" placeholder="Username" style={{ borderRadius: "30px", padding: "10px 20px", fontSize: "13px", border: "1px solid grey", outline: "none" }} />}
+                            <input value={userDetails.email} onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })} type="email" className="mb-md-3 mb-2 w-100 authinput" placeholder="Email" style={{ borderRadius: "30px", padding: "10px 20px", fontSize: "13px", border: "1px solid grey", outline: "none" }} />
+                            <input value={userDetails.password} onChange={(e) => setUserDetails({ ...userDetails, password: e.target.value })} type="password" className="mb-md-3 mb-2 w-100 authinput" placeholder="Password" style={{ borderRadius: "30px", padding: "10px 20px", fontSize: "13px", border: "1px solid grey", outline: "none" }} />
                             {isRegister ?
                                 <button
                                     onClick={handleRegister}
-                                    className="btn text-light w-100"
+                                    className="btn text-light w-100 authbutton"
                                     style={{ backgroundColor: "rgba(61, 179, 101, 1)", borderRadius: "30px", fontWeight: "500", }}>
                                     Sign Up
                                 </button>
                                 : <button
                                     onClick={handleLogin}
-                                    className="btn text-light w-100"
+                                    className="btn text-light w-100 authbutton"
                                     style={{ backgroundColor: "rgba(61, 179, 101, 1)", borderRadius: "30px", fontWeight: "500", }}>
                                     Login {loginSpinner && <Spinner animation="border" variant="success" size="sm" />}
                                 </button>}

@@ -170,13 +170,13 @@ const Cart = () => {
     console.log(order);
 
     var options = {
-      "key": "rzp_test_RSXbugS3xjkI1C", // Enter the Key ID generated from the Dashboard
-      totalPrice, // Amount is in currency subunits.
+      "key": "rzp_test_RSXbugS3xjkI1C", 
+      totalPrice,
       "currency": "INR",
-      "name": "Farmora", //your business name
+      "name": "Farmora",
       "description": "Test Transaction",
       "image": "https://example.com/your_logo",
-      "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      "order_id": order.id,
       handler: async function (response) {
         const body = {
           razorpayPaymentId: response.razorpay_payment_id, razorpayOrderId: response.razorpay_order_id, razorpaySignature: response.razorpay_signature, cartItems, consumerName, address, totalPrice
@@ -206,8 +206,8 @@ const Cart = () => {
         }
         
       },
-      "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
-        "name": consumerName, //your customer's name
+      "prefill": { 
+        "name": consumerName,
         "email": consumerEmail
       },
       "notes": {
@@ -241,20 +241,20 @@ const Cart = () => {
     <>
       <div>
         <HeaderBuyer />
-        <div className='p-sm-5 p-2'>
+        <div className='p-md-5 p-2'>
           {cartItems.length > 0 ?
             <div>
-              <h1 className='mb-sm-3 cart' style={{ color: 'rgba(61, 179, 101, 1)' }}>Cart Summary</h1>
+              <h1 className='mb-3 px-3 px-md-0 wishCartHead' style={{ color: 'rgba(61, 179, 101, 1)' }}>Cart Summary</h1>
 
               <div>
-                <div className='row d-flex align-items-start p-4 p-md-0 w-100 ms-1'>
+                <div className='row d-flex align-items-start px-4 p-md-0 w-100 ms-1'>
 
                   {/* Cart products table */}
-                  <div className='col-sm-8 p-4' style={{ borderRadius: '30px', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)', backgroundColor: 'white' }}>
+                  <div className='col-md-8 p-4' style={{ borderRadius: '30px', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)', backgroundColor: 'white' }}>
 
                     <Table responsive="md" className='align-middle'>
                       <thead>
-                        <tr>
+                        <tr className='tablehead'>
                           <th>Sl.no</th>
                           <th>Item</th>
                           <th>Preview</th>
@@ -267,7 +267,7 @@ const Cart = () => {
                       <tbody>
 
                         {cartItems.map((cartItem, Index) => (
-                          <tr key={Index}>
+                          <tr className='tablecontents' key={Index}>
                             <td>{Index + 1}</td>
                             <td>{cartItem.name}</td>
                             <td><img src={`${SERVER_URL}/uploads/${cartItem?.cropImage}`} alt="" style={{ width: '40px' }} /></td>
@@ -282,27 +282,27 @@ const Cart = () => {
 
                     {/* Cart Buttons */}
                     <div className='text-end mt-1 mt-sm-0'>
-                      <Button onClick={clearCart} style={{ backgroundColor: 'rgba(61, 179, 101, 1)', fontFamily: "Poppins, sans-serif" }} className='btn rounded-pill  py-2 px-3 border-0 get shadow'>EMPTY CART</Button>
+                      <Button onClick={clearCart} style={{ backgroundColor: 'rgba(61, 179, 101, 1)', fontFamily: "Poppins, sans-serif" }} className='btn rounded-pill  py-2 px-3 border-0 get shadow authbutton'>EMPTY CART</Button>
 
-                      <Link to={'/'}><Button style={{ border: 'solid 2px', borderColor: 'rgba(61, 179, 101, 1)', color: 'rgba(61, 179, 101, 1)', fontFamily: "Poppins, sans-serif" }} className='btn rounded-pill ms-2 py-2 px-3  get shadow bg-transparent'>SHOP MORE</Button></Link>
+                      <Link to={'/'}><Button style={{ border: 'solid 2px', borderColor: 'rgba(61, 179, 101, 1)', color: 'rgba(61, 179, 101, 1)', fontFamily: "Poppins, sans-serif" }} className='btn rounded-pill ms-2 py-2 px-3  get shadow bg-transparent authbutton'>SHOP MORE</Button></Link>
                     </div>
                   </div>
 
                   {/* Checkout Section */}
-                  <div className='col-sm-4 my-3 my-sm-0'>
+                  <div className='col-md-4 my-3 my-sm-0'>
                     <Card className='border-0 p-2' style={{ borderRadius: '30px', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)' }}>
                       <Card.Body>
-                        <Card.Title style={{ fontWeight: '500' }}>Address</Card.Title>
-                        <textarea value={address} onChange={(e) => { setAddress(e.target.value) }} className='form-control' rows="3" placeholder="House No, Street, Area, City, Pincode, Phone number"></textarea>
+                        <Card.Title className='addressSec' style={{ fontWeight: '500' }}>Address</Card.Title>
+                        <textarea value={address} onChange={(e) => { setAddress(e.target.value) }} className='form-control address' rows="3" placeholder="House No, Street, Area, City, Pincode, Phone number"></textarea>
                       </Card.Body>
                     </Card>
-                    <Card className='border-0 p-2 mt-5' style={{ borderRadius: '30px', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)' }}>
+                    <Card className='border-0 p-2 mt-md-5 mt-3' style={{ borderRadius: '30px', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)' }}>
                       <Card.Body>
-                        <Card.Title style={{ fontWeight: '500' }}>Total Items : <span>{cartItems.length}</span></Card.Title>
-                        <Card.Title> Total Amount : <span>&#8377; {cartItems.reduce((total, item) => {
+                        <Card.Title className='checkoutSec' style={{ fontWeight: '500' }}>Total Items : <span>{cartItems.length}</span></Card.Title>
+                        <Card.Title className='checkoutSec'> Total Amount : <span>&#8377; {cartItems.reduce((total, item) => {
                           return total + item.price * item.cartQuantity;
                         }, 0)} </span></Card.Title>
-                        <Button onClick={paymentHandler} className='w-100 btn rounded-pill  py-2 px-3 border-0 shadow' style={{ backgroundColor: 'rgba(61, 179, 101, 1)', fontFamily: "Poppins, sans-serif" }}>CHECKOUT</Button>
+                        <Button onClick={paymentHandler} className='w-100 btn rounded-pill  py-2 px-3 border-0 shadow authbutton' style={{ backgroundColor: 'rgba(61, 179, 101, 1)', fontFamily: "Poppins, sans-serif" }}>CHECKOUT</Button>
                       </Card.Body>
                     </Card>
                   </div>
@@ -313,7 +313,7 @@ const Cart = () => {
 
 
             :
-            <div className='d-flex flex-column align-items-center w-100 mb-4'>
+            <div className='d-flex flex-column align-items-center w-100 my-4 pb-3 pb-md-0'>
               {/* <img className='cartimg'  src={cartempty} alt="" style={{width:'25%'}} /> */}
               <DotLottieReact
                 src="https://lottie.host/66c36631-c41c-4b17-9c11-99a46bfe5ca6/EYqG0aA6w6.lottie"
@@ -321,10 +321,10 @@ const Cart = () => {
                 autoplay
                 className='w-50'
               />
-              <h4 style={{ color: 'rgba(61, 179, 101, 1)' }}>Your Cart is empty</h4>
-              <Link to={'/'}><Button style={{
+              <h4 className='trusted' style={{ color: 'rgba(61, 179, 101, 1)' }}>Your Cart is empty</h4>
+              <Link to={'/products'}><Button style={{
                 backgroundColor: "rgba(61, 179, 101, 1)",
-              }} className='btn rounded-pill  py-2 px-4 border-0 get shadow mt-sm-2 mt-0'>Go Home</Button></Link>
+              }} className='btn rounded-pill  py-2 px-4 border-0 get shadow mt-sm-2 mt-0 authbutton'>Shop products</Button></Link>
             </div>}
         </div>
         <Footer />

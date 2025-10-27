@@ -49,8 +49,10 @@ const Wishlist = () => {
     <>
     <div>
         <HeaderBuyer/>
-        <h1 className='text-center mt-5' style={{color:'rgba(61, 179, 101, 1)', fontWeight:'600'}}>Wishlist</h1>
-        <div className="d-flex justify-content-center flex-wrap mt-3 pb-5 p-5 gap-5 ">
+
+        {/* Wishlist Section */}
+        <h1 className='text-center mt-md-5 wishCartHead' style={{color:'rgba(61, 179, 101, 1)', fontWeight:'600'}}>Wishlist</h1>
+        <div className="d-flex justify-content-center flex-wrap mt-3 p-md-5 gap-md-5 gap-3">
             {WishlistCrops.length>0?
             WishlistCrops.map((crop,index)=>(
               <ProductCard key={index} crop={crop} isWishlist={true} />

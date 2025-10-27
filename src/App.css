@@ -14,6 +14,15 @@
     background-color: black !important;
     color: white !important;
 }
+.farmer-header{
+    transition: 0.2s ease-in-out;
+}
+.farmer-header:hover{
+    background-color: rgba(61, 179, 101, 1);
+}
+.farmer-header:hover span{
+    color: white !important;
+}
 
 /* Responsive Home Section*/
 @media(max-width:576px) {
@@ -146,5 +155,68 @@
     }
     .footer-brand{
         font-size: 92px !important;
+    }
+}
+
+/* Responsive Authentication Page */
+@media(max-width:576px){
+    .authbox{
+        width: 75% !important;
+        border-radius: 50px !important;
+    }
+    .authbrand{
+        font-size: 12px !important;
+    }
+    .authhead{
+        font-size: 14px !important;
+    }
+    .authinput{
+        padding: 5px 20px !important;
+        font-size: 11px !important;
+    }
+    .authbutton{
+        padding: 4px 0px;
+        font-size: 12px;
+    }
+}
+
+/* Responsive Header Buyer */
+@media(max-width:576px){
+    .buyerlinks{
+        font-size: 11px;
+    }
+    .wishCartHead{
+        font-size: 18px;
+    }
+}
+
+/* Responsive Cart */
+@media(max-width:576px){
+    .tablehead{
+        font-size: 12px !important;
+    }
+    .tablecontents{
+        font-size: 11px !important;
+    }
+    .addressSec{
+        font-size: 13px;
+    }
+    .address{
+        font-size: 11px;
+    }
+    .checkoutSec{
+        font-size: 13px;
+    }
+    
+}
+
+/* Responsive Farmer Dashboard */
+@media(max-width:576px){
+    .greenBox{
+        padding: 10px 10px !important;
+    }
+    .weatherBullets{
+        padding: 5px 20px !important;
+        border-radius: 20px !important;
     }
 }
